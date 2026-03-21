@@ -135,7 +135,7 @@ const AutumnSection = () => {
         scrollTrigger: { trigger: sectionRef.current, start: "top bottom", end: "top 30%", scrub: 1 }
       });
 
-      // Maple Leaves Animation
+      // Holographic Tech Leaves Animation
       leavesRef.current.forEach((leaf) => {
         // Randomize initial position above screen
         gsap.set(leaf, { 
@@ -157,7 +157,7 @@ const AutumnSection = () => {
         });
       });
 
-      // Wind Lines Animation
+      // Data Stream (Wind) Lines Animation
       windLinesRef.current.forEach((line, index) => {
         gsap.fromTo(line, { x: -window.innerWidth * 0.5, opacity: 0 }, { x: window.innerWidth * 1.5, opacity: 0.3, duration: gsap.utils.random(4, 8), repeat: -1, ease: "sine.inOut", delay: index * 0.5 });
       });
@@ -166,36 +166,49 @@ const AutumnSection = () => {
   }, []);
 
   return (
-    <div ref={sectionRef} className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-[#d7ccc8]">
+    // Background updated to Obsidian Tech Theme (#0B0F19)
+    <div ref={sectionRef} className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-[#0B0F19]">
       
-      {/* --- BACKGROUNDS --- */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#d7ccc8] via-[#bcaaa4] to-[#8d6e63] -z-10" />
-      <div ref={fadeOverlayRef} className="absolute inset-0 bg-gradient-to-b from-[#ffe0b2] via-[#ffcc80] to-[#fff9e6] z-10 pointer-events-none" />
-      <div className="absolute inset-0 z-[1] pointer-events-none opacity-40 mix-blend-multiply" style={{ background: 'radial-gradient(circle at center, transparent 20%, #5d4037 100%)' }} />
+      {/* --- BACKGROUNDS & AMBIENT GLOWS --- */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0B0F19] via-[#0F172A] to-[#0B0F19] -z-10" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,243,255,0.03)_0%,transparent_70%)] pointer-events-none -z-10" />
+      
+      {/* Glowing Orbs matching your Home transitions */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-blue-900/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-5%] w-[35vw] h-[35vw] bg-purple-900/15 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-[20%] left-[20%] w-[45vw] h-[45vw] bg-cyan-900/10 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
-      {/* --- WIND LAYER --- */}
+      {/* Transition Fade Overlay */}
+      <div ref={fadeOverlayRef} className="absolute inset-0 bg-[#0B0F19] z-10 pointer-events-none" />
+
+      {/* --- WIND / DATA STREAM LAYER --- */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {[...Array(8)].map((_, i) => (
-          <div key={`wind-${i}`} ref={(el) => (windLinesRef.current[i] = el)} className="absolute h-[2px] rounded-full bg-white blur-[1px]" style={{ top: `${20 + i * 10}%`, width: '120vw' }} />
+          <div 
+            key={`wind-${i}`} 
+            ref={(el) => (windLinesRef.current[i] = el)} 
+            className="absolute h-[2px] rounded-full bg-gradient-to-r from-transparent via-[#00F3FF]/80 to-transparent blur-[1px]" 
+            style={{ top: `${20 + i * 10}%`, width: '120vw' }} 
+          />
         ))}
       </div>
       
-      {/* --- MAPLE LEAVES LAYER --- */}
-      {/* Positioned at z-30 to float smoothly over the background and cards */}
+      {/* --- HOLOGRAPHIC TECH LEAVES LAYER --- */}
       <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden">
         {[...Array(40)].map((_, i) => {
-           // Assign random autumnal colors to leaves
-           const leafColors = ['#d84315', '#e64a19', '#f4511e', '#ff6f00', '#ffab00', '#cddc39'];
+           // Assign tech-themed glowing colors to leaves (Cyan, Blue, Purple)
+           const leafColors = ['#00F3FF', '#3B82F6', '#A855F7', '#8B5CF6', '#06B6D4', '#2DD4BF'];
            const leafColor = leafColors[i % leafColors.length];
 
            return (
             <div 
               key={`leaf-${i}`} 
               ref={(el) => (leavesRef.current[i] = el)} 
-              className="absolute opacity-80" 
-              style={{ filter: 'drop-shadow(0 5px 8px rgba(0,0,0,0.25))', width: '35px', height: '35px' }}
+              className="absolute opacity-60" 
+              style={{ filter: `drop-shadow(0 0 8px ${leafColor})`, width: '35px', height: '35px' }}
             >
-              <svg viewBox="0 0 28 28" className="w-full h-full">
+              <svg viewBox="0 0 28 28" className="w-full h-full opacity-70">
                 <path d="M14 2 L16 8 L20 6 L18 12 L24 14 L18 16 L20 22 L16 20 L14 26 L12 20 L8 22 L10 16 L4 14 L10 12 L8 6 L12 8 Z" fill={leafColor} />
               </svg>
             </div>
@@ -208,8 +221,8 @@ const AutumnSection = () => {
         
         {/* Title */}
         <div className="absolute top-8 md:top-12 text-center z-50 pointer-events-auto">
-            <h2 className="text-[#3e2723]/90 tracking-[0.4em] text-sm md:text-base font-black uppercase drop-shadow-sm font-['Orbitron']">FEATURED PROJECTS</h2>
-            <div className="w-12 h-[2px] bg-[#5d4037] mx-auto mt-3 opacity-50"></div>
+            <h2 className="text-[#00F3FF] tracking-[0.4em] text-sm md:text-base font-black uppercase drop-shadow-[0_0_8px_rgba(0,243,255,0.5)] font-['Orbitron']">FEATURED PROJECTS</h2>
+            <div className="w-12 h-[2px] bg-[#00F3FF] mx-auto mt-3 opacity-50"></div>
         </div>
 
         {/* Carousel Container */}
@@ -225,8 +238,8 @@ const AutumnSection = () => {
                 setActiveIndex(index);
                 manualInteraction(); 
               }}
-              // Blended Glassmorphism Card Design
-              className="absolute w-[80vw] md:w-[22vw] rounded-xl md:rounded-2xl shadow-2xl overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 cursor-pointer will-change-transform group"
+              // Glassmorphism Card matched to Obsidian/Slate tech theme
+              className="absolute w-[80vw] md:w-[22vw] rounded-xl md:rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0F172A]/80 backdrop-blur-md border border-[#00F3FF]/20 cursor-pointer will-change-transform group"
               style={{ 
                 left: '50%',
                 marginLeft: isMobile ? '-40vw' : '-11vw',
@@ -234,28 +247,27 @@ const AutumnSection = () => {
             >
               {/* Project Image */}
               <div className="relative w-full h-full">
-                {/* Images transition slightly on hover for an interactive feel */}
-                <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90" loading="eager" />
+                <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80" loading="eager" />
                 
-                {/* Subtle earthy overlay on the image to blend it with the background further */}
-                <div className="absolute inset-0 bg-[#5d4037]/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500"></div>
+                {/* Dark tech overlay on the image */}
+                <div className="absolute inset-0 bg-[#0B0F19]/40 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500"></div>
               </div>
               
-              {/* Earthy Blended Project Details Overlay */}
-              <div className={`absolute bottom-0 left-0 right-0 p-5 md:p-6 bg-gradient-to-t from-[#3e2723] via-[#4e342e]/80 to-transparent transition-all duration-500 ${isActive ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+              {/* Slate Blended Project Details Overlay */}
+              <div className={`absolute bottom-0 left-0 right-0 p-5 md:p-6 bg-gradient-to-t from-[#0B0F19] via-[#0F172A]/95 to-transparent transition-all duration-500 ${isActive ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
                 
-                <h3 className="text-white font-bold text-lg md:text-xl font-['Orbitron'] mb-2 leading-tight drop-shadow-md">
+                <h3 className="text-white font-bold text-lg md:text-xl font-['Orbitron'] mb-2 leading-tight drop-shadow-md group-hover:text-[#00F3FF] transition-colors">
                   {item.title}
                 </h3>
                 
-                <p className="text-white/80 text-xs md:text-sm font-medium mb-4 leading-relaxed">
+                <p className="text-slate-300 text-xs md:text-sm font-medium mb-4 leading-relaxed">
                   {item.desc}
                 </p>
 
-                {/* Glassy Tech Stack Pills */}
+                {/* Glassy Tech Stack Pills (Cyan tinted) */}
                 <div className="flex flex-wrap gap-2">
                   {item.tech.map((techItem, idx) => (
-                    <span key={idx} className="bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-[10px] md:text-xs px-2 py-1 rounded">
+                    <span key={idx} className="bg-[#00F3FF]/10 backdrop-blur-sm border border-[#00F3FF]/30 text-cyan-100 text-[10px] md:text-xs px-2 py-1 rounded">
                       {techItem}
                     </span>
                   ))}
@@ -271,18 +283,18 @@ const AutumnSection = () => {
         <div className="absolute bottom-6 md:bottom-10 flex gap-8 md:gap-12 z-[100] pointer-events-auto">
           <button 
             onClick={() => manualInteraction('prev')}
-            className="group flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/30 bg-white/20 backdrop-blur-md hover:bg-[#5d4037] hover:border-[#5d4037] active:scale-95 transition-all duration-200 shadow-lg touch-manipulation"
+            className="group flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full border border-[#00F3FF]/30 bg-[#0F172A]/50 backdrop-blur-md hover:bg-[#00F3FF]/20 hover:border-[#00F3FF]/60 active:scale-95 transition-all duration-200 shadow-[0_0_15px_rgba(0,243,255,0.1)] touch-manipulation"
             aria-label="Previous Slide"
           >
-            <svg className="w-5 h-5 md:w-6 md:h-6 text-[#3e2723] group-hover:text-white transition-colors" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+            <svg className="w-5 h-5 md:w-6 md:h-6 text-[#00F3FF] group-hover:text-white transition-colors" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
           </button>
 
           <button 
             onClick={() => manualInteraction('next')}
-            className="group flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/30 bg-white/20 backdrop-blur-md hover:bg-[#5d4037] hover:border-[#5d4037] active:scale-95 transition-all duration-200 shadow-lg touch-manipulation"
+            className="group flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full border border-[#00F3FF]/30 bg-[#0F172A]/50 backdrop-blur-md hover:bg-[#00F3FF]/20 hover:border-[#00F3FF]/60 active:scale-95 transition-all duration-200 shadow-[0_0_15px_rgba(0,243,255,0.1)] touch-manipulation"
             aria-label="Next Slide"
           >
-            <svg className="w-5 h-5 md:w-6 md:h-6 text-[#3e2723] group-hover:text-white transition-colors" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+            <svg className="w-5 h-5 md:w-6 md:h-6 text-[#00F3FF] group-hover:text-white transition-colors" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
           </button>
         </div>
 
