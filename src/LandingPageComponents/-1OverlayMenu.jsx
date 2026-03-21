@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useLayoutEffect, useState } from "react";
 import gsap from "gsap";
 
-const HobbiesOverlay = ({ isOpen, closeMenu }) => {
+const HobbiesOverlay = ({ isOpen }) => {
   const containerRef = useRef(null);
   const linksRef = useRef([]);
   const petalsRef = useRef([]);
@@ -108,10 +108,6 @@ const HobbiesOverlay = ({ isOpen, closeMenu }) => {
           <div className="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-[#423638] blur-[100px] rounded-full opacity-70"></div>
       </div>
 
-      {/* CLOSE BUTTON */}
-      <button onClick={closeMenu} className="absolute top-8 right-8 z-[60] text-[#E6A4B4] font-mono text-[10px] tracking-[0.2em] border border-[#E6A4B4]/30 px-3 py-1 rounded-full hover:bg-[#E6A4B4] hover:text-[#2D2426] transition-all">
-        CLOSE_SYSTEM
-      </button>
 
       {/* --- LEFT SIDE: HOBBY LIST --- */}
       <div className="flex flex-col gap-3 md:gap-4 items-start z-50 px-10 md:pl-[15%] pt-28 md:pt-0 w-full md:w-auto">
