@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// --- EXTERNAL COMPONENTS (Original File Names Kept) ---
+// --- EXTERNAL COMPONENTS ---
 import Navbar from './LandingPageComponents/-1NavBar';
 import GlitchMenu from './LandingPageComponents/-1GlitchMenu';
 import OverlayMenu from './LandingPageComponents/-1OverlayMenu';
@@ -14,6 +14,8 @@ import SecondSection from './LandingPageComponents/ExperienceAndAcadamics.jsx';
 import CircleRevealTransition from './LandingPageComponents/-1PageTransition.jsx'; 
 import AnimatedWaveFooter from './LandingPageComponents/Footer.jsx'; 
 
+import Home from './LandingPageComponents/Home.jsx'; 
+
 gsap.registerPlugin(ScrollTrigger);
 
 const fixedPageStyle = {
@@ -22,21 +24,25 @@ const fixedPageStyle = {
 };
 
 // --- MEMOIZED SECTIONS ---
-// GokuPage now acts as a pure CSS dark container for your new Hero component
+
+// 1. HOME PAGE
 const GokuPage = memo(({ sectionRef }) => (
   <div ref={sectionRef} style={{ ...fixedPageStyle, zIndex: 10, opacity: 1, backgroundColor: '#030712' }}>
-    <div className="absolute inset-0 bg-blue-600/10 mix-blend-screen pointer-events-none" />
-    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
-    {/* You can mount your new Hero Page component inside here if it's external */}
+    <div className="absolute inset-0 bg-blue-600/5 mix-blend-screen pointer-events-none" />
+    <div className="relative z-20 w-full h-full pointer-events-auto">
+      <Home H={true} /> 
+    </div>
   </div>
 ));
 
+// 3. ACADEMICS PAGE (Requires parent ref)
 const SpacePage = memo(({ sectionRef, parent }) => (
   <div ref={sectionRef} style={{ ...fixedPageStyle, zIndex: 8, opacity: 0 }}>
     <SecondSection father={parent} />
   </div>
 ));
 
+// GENERIC PAGE WRAPPER (Used for About, Skills, Projects)
 const PageWrapper = memo(({ sectionRef, children }) => (
   <div ref={sectionRef} style={{ ...fixedPageStyle, zIndex: 1, opacity: 0 }}>
     {children}
@@ -55,51 +61,61 @@ const LandingPage = () => {
 
   return (
     <>
-      {/* SCROLLABLE TRACK (Heights reduced slightly for better CV flow) */}
+      {/* --- SCROLL TRACK --- 
+          IDs updated to match the new logical flow 
+      */}
       <div ref={PARENT} className="relative w-full" style={{ height: 'auto', minHeight: '1500vh' }}>
         <div id="home" className="h-screen" /> 
         
         <div ref={transitionRefs.t1} className="h-[300vh]" />
-        <div id="events" className="h-[300vh] bg-transparent" />
-
+        <div id="about" className="h-[300vh] bg-transparent" />
+        
         <div ref={transitionRefs.t2} className="h-[300vh]" />
-        <div id="about" className="h-[100vh]" />
+        <div id="academics" className="h-[100vh]" />
         
         <div ref={transitionRefs.t3} className="h-[300vh]" />
-        <div id="people" className="h-[100vh]" />
-
+        <div id="skills" className="h-[100vh]" />
+        
         <div ref={transitionRefs.t4} className="h-[300vh]" />
-        <div id="sponsors" className="h-[100vh]" />
-
+        <div id="projects" className="h-[100vh]" />
+        
         <div ref={transitionRefs.t5} className="h-[150vh]" />
       </div>
 
-      {/* VISUAL LAYERS */}
+      {/* --- VISUAL LAYERS --- */}
       <div className="fixed inset-0 w-full h-screen overflow-hidden pointer-events-none">
         
-        <GokuPage sectionRef={sectionRefs.goku} />
-        <SpacePage sectionRef={sectionRefs.space} parent={PARENT} />
-        
-        <PageWrapper sectionRef={sectionRefs.spring}><SpringSection /></PageWrapper>
-        <PageWrapper sectionRef={sectionRefs.summer}><SummerSection /></PageWrapper>
-        <PageWrapper sectionRef={sectionRefs.autumn}><AutumnSection /></PageWrapper>
+        {/* Render all sections (DOM order doesn't affect the GSAP sequence) */}
+        <GokuPage sectionRef={sectionRefs.goku} /> {/* 1. Home */}
+        <PageWrapper sectionRef={sectionRefs.spring}><SpringSection /></PageWrapper> {/* 2. About */}
+        <SpacePage sectionRef={sectionRefs.space} parent={PARENT} /> {/* 3. Academics */}
+        <PageWrapper sectionRef={sectionRefs.summer}><SummerSection /></PageWrapper> {/* 4. Skills */}
+        <PageWrapper sectionRef={sectionRefs.autumn}><AutumnSection /></PageWrapper> {/* 5. Projects */}
 
-        {/* CIRCLE REVEAL TRANSITIONS (Updated to neon tech colors) */}
+        {/* --- TRANSITION SEQUENCES --- */}
+        
+        {/* T1: Home (Goku) -> About (Spring) */}
         <CircleRevealTransition
           color1="#00F3FF" triggerRef={transitionRefs.t1}
-          currentSectionRef={sectionRefs.goku} nextSectionRef={sectionRefs.space}
+          currentSectionRef={sectionRefs.goku} nextSectionRef={sectionRefs.spring}
           originPosition="top-left"
         />
+        
+        {/* T2: About (Spring) -> Academics (Space) */}
         <CircleRevealTransition
           color1="#A855F7" triggerRef={transitionRefs.t2}
-          currentSectionRef={sectionRefs.space} nextSectionRef={sectionRefs.spring}
+          currentSectionRef={sectionRefs.spring} nextSectionRef={sectionRefs.space}
           originPosition="bottom-right"
         />
+        
+        {/* T3: Academics (Space) -> Skills (Summer) */}
         <CircleRevealTransition
           color1="#3B82F6" triggerRef={transitionRefs.t3}
-          currentSectionRef={sectionRefs.spring} nextSectionRef={sectionRefs.summer}
+          currentSectionRef={sectionRefs.space} nextSectionRef={sectionRefs.summer}
           originPosition="top-right"
         />
+        
+        {/* T4: Skills (Summer) -> Projects (Autumn) */}
         <CircleRevealTransition
           color1="#10B981" triggerRef={transitionRefs.t4}
           currentSectionRef={sectionRefs.summer} nextSectionRef={sectionRefs.autumn}
@@ -133,7 +149,6 @@ export default function App() {
     <Router>
       <ScrollToTop />
       
-      {/* Navbar & Menus (Gatekeeper removed, always accessible) */}
       <div className="fixed top-0 left-0 right-0 z-[1000] pointer-events-auto">
         <Navbar toggleMenu={toggleMenu} />
         <GlitchMenu onClick={toggleMenu} isOpen={isMenuOpen} />

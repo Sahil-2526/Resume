@@ -1,20 +1,11 @@
 import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import gsap from "gsap";
 
-const TRIBAL_PATHS = {
-  S: "M90 20 L90 5 L10 5 L10 45 L80 45 L80 95 L10 95 L10 80 L25 80 L25 80 L80 80 L80 60 L10 60 L10 20 L90 20 Z",
-  A: "M50 2 L65 30 L95 90 L75 80 L65 55 L35 55 L25 80 L5 90 L35 30 Z M40 45 L60 45 L50 25 Z",
-  H: "M5 5 L30 15 L25 45 L75 35 L70 15 L95 5 L90 95 L65 85 L70 55 L30 65 L25 85 L10 95 Z",
-  I: "M30 5 L70 5 L70 20 L60 20 L60 80 L70 80 L70 95 L30 95 L30 80 L40 80 L40 20 L30 20 Z",
-  L: "M20 5 L40 5 L40 75 L80 75 L80 95 L20 95 Z"
-};
-
-const TribalLetter = ({ char }) => (
-  <div className="relative w-[8vh] h-[8vh] md:w-[10vh] md:h-[10vh] flex justify-center items-center pointer-events-auto hover:scale-110 transition-transform duration-300">
-    <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible" style={{ filter: "drop-shadow(0 0 8px rgba(0, 243, 255, 0.6))" }}>
-      <path d={TRIBAL_PATHS[char] || ""} fill="transparent" stroke="#00F3FF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d={TRIBAL_PATHS[char] || ""} fill="transparent" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-    </svg>
+// Clean, Elegant Minimal Typography for the Side Name
+const SeasonLetter = ({ char }) => (
+  <div className="relative w-12 h-12 flex justify-center items-center font-serif text-3xl text-slate-400/80 hover:text-slate-100 transition-all duration-500 cursor-default group">
+    <span className="select-none">{char}</span>
+    <div className="absolute -bottom-1 w-0 h-[1px] bg-amber-200 transition-all duration-500 group-hover:w-full" />
   </div>
 );
 
@@ -22,10 +13,11 @@ const CVHero = React.forwardRef((props, ref) => {
   const [isMobile, setIsMobile] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
   
-  const notificationRef = useRef(null); 
-  const notificationBoxRef = useRef(null);
+  const containerRef = useRef(null); 
+  const contentBoxRef = useRef(null);
   const toggleBtnRef = useRef(null); 
 
+  // Handle Responsive Sizing
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
@@ -33,71 +25,141 @@ const CVHero = React.forwardRef((props, ref) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
   
+  // GSAP Animations for the Profile Box
   useLayoutEffect(() => {
-    if (!notificationBoxRef.current) return;
+    if (!contentBoxRef.current) return;
+    
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
-      gsap.to(notificationRef.current, { y: -15, duration: 2.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
+      
+      // Gentle floating animation for the whole container
+      gsap.to(containerRef.current, { y: -10, duration: 3, ease: "sine.inOut", yoyo: true, repeat: -1 });
 
       if (isExpanded) {
-        tl.to(notificationBoxRef.current, {
-          width: isMobile ? 320 : 420, height: "auto", borderRadius: "0px", 
-          backgroundColor: "rgba(5, 11, 20, 0.85)", borderColor: "rgba(0, 243, 255, 0.5)",
-          boxShadow: "0 0 40px rgba(0, 243, 255, 0.15)", duration: 0.6, ease: "back.out(1.1)"
+        // Expand Animation - Now slightly narrower (400px)
+        tl.to(contentBoxRef.current, {
+          width: isMobile ? "90vw" : 400, 
+          height: "auto", 
+          borderRadius: "24px", 
+          backgroundColor: "rgba(255, 255, 255, 0.03)", 
+          borderColor: "rgba(255, 255, 255, 0.1)",
+          boxShadow: "0 20px 50px rgba(0, 0, 0, 0.3)", 
+          duration: 0.8, 
+          ease: "expo.out"
         })
-        .to(toggleBtnRef.current, { top: "24px", left: "24px", xPercent: 0, yPercent: 0, duration: 0.5 }, "<")
-        .to(".content-wrapper", { opacity: 1, visibility: "visible", duration: 0.2 })
+        .to(toggleBtnRef.current, { rotation: 0, duration: 0.5 }, "<")
+        .to(".content-wrapper", { opacity: 1, visibility: "visible", y: 0, duration: 0.4, stagger: 0.1 });
       } else {
-        tl.to(".content-wrapper", { opacity: 0, duration: 0.2 })
-        .to(notificationBoxRef.current, {
-          width: 50, height: 50, borderRadius: "50%", 
-          backgroundColor: "rgba(0, 0, 0, 0.8)", borderColor: "rgba(0, 243, 255, 0.8)", 
-          boxShadow: "0 0 15px rgba(0, 243, 255, 0.6)", duration: 0.4
+        // Collapse Animation
+        tl.to(".content-wrapper", { opacity: 0, y: 10, duration: 0.2 })
+        .to(contentBoxRef.current, {
+          width: 60, height: 60, borderRadius: "50%", 
+          backgroundColor: "rgba(255, 255, 255, 0.1)", 
+          borderColor: "rgba(255, 255, 255, 0.2)", 
+          duration: 0.5,
+          ease: "back.in(1.2)"
         }, "<")
-        .to(toggleBtnRef.current, { top: "50%", left: "50%", xPercent: -50, yPercent: -50, duration: 0.4, scale: 1.2 }, "<");
+        .to(toggleBtnRef.current, { rotation: 135, scale: 1.1, duration: 0.4 }, "<");
       }
-    }, notificationRef);
+    }, containerRef);
+    
     return () => ctx.revert();
   }, [isExpanded, isMobile]);
 
   return (
-    <div ref={ref} className="fixed inset-0 w-full h-screen bg-[#030712] overflow-hidden" style={{ zIndex: 10, opacity: 1 }}>
+    <div ref={ref} className="fixed inset-0 w-full h-screen bg-[#0a0a0c] overflow-hidden" style={{ zIndex: 10 }}>
       
-      {/* Background Grid */}
-      <div className="absolute inset-0 pointer-events-none opacity-10" style={{ backgroundImage: 'linear-gradient(#00F3FF 1px, transparent 1px), linear-gradient(90deg, #00F3FF 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-      <div className="absolute top-1/4 left-1/4 w-[50vw] h-[50vw] bg-[#00F3FF] rounded-full mix-blend-screen filter blur-[150px] opacity-10 animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-[50vw] h-[50vw] bg-[#A855F7] rounded-full mix-blend-screen filter blur-[150px] opacity-10" />
+      {/* --- ALL SEASON AMBIENT BACKGROUND --- */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-emerald-900/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-[20%] right-[-5%] w-[35vw] h-[35vw] bg-amber-900/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-[10%] w-[45vw] h-[45vw] bg-yellow-900/10 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-[10%] right-[10%] w-[30vw] h-[30vw] bg-slate-800/30 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
-      {/* Side Typography */}
-      <div className="absolute right-[5vw] top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center gap-4 z-[55] pointer-events-none">
-        {['S','A','H','I','L'].map((char, i) => ( <TribalLetter key={i} char={char} /> ))}
+      {/* --- SIDE TYPOGRAPHY (S A H I L) --- */}
+      <div className="absolute right-[6vw] top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center gap-6 z-30 opacity-40 pointer-events-none">
+        {['S','A','H','I','L'].map((char, i) => ( <SeasonLetter key={i} char={char} /> ))}
       </div>
 
-      {/* Profile Box */}
-      <div className="absolute inset-0 flex items-center justify-start px-[6vw] md:px-[10vw] z-20 pointer-events-none">
-        <div ref={notificationRef} className="font-sans pointer-events-auto">
-            <div ref={notificationBoxRef} className="relative overflow-hidden border backdrop-blur-md w-[380px] min-h-[50px] rounded-[50px]">
+      {/* --- MAIN INTERACTIVE PROFILE CARD --- */}
+      <div className="absolute inset-0 flex items-center justify-start px-[8vw] md:px-[12vw] z-20 pointer-events-none">
+        
+        <div ref={containerRef} className="pointer-events-auto">
+            <div ref={contentBoxRef} className="relative overflow-hidden border border-white/10 backdrop-blur-xl transition-all duration-300">
               
-              <div className="relative p-6 md:p-8 flex flex-col w-full h-full justify-between">
-                <div className="flex items-center w-full min-h-[32px]">
-                  <div ref={toggleBtnRef} onClick={() => setIsExpanded(!isExpanded)} className="absolute flex items-center justify-center w-[30px] h-[30px] md:w-8 md:h-8 rounded-full border border-[#00F3FF] text-[#00F3FF] cursor-pointer hover:bg-[#00F3FF] hover:text-black transition-colors z-[60] bg-black/40 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <span className="text-lg font-bold">!</span>
+              {/* Expand/Collapse Toggle Button */}
+              <div 
+                ref={toggleBtnRef} 
+                onClick={() => setIsExpanded(!isExpanded)} 
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white/60 cursor-pointer hover:bg-white/10 hover:text-white transition-all z-50"
+              >
+                <span className="text-xl leading-none">{isExpanded ? '−' : '+'}</span>
+              </div>
+
+              {/* Card Content - Reduced Padding slightly for smaller div */}
+              <div className="p-6 md:p-8">
+                
+                {/* Header Section with Image and Name */}
+                <div className="content-wrapper opacity-0 invisible translate-y-4 flex items-start gap-4 mb-5 pb-5 border-b border-white/5">
+                  
+                  {/* --- SMALL IMAGE CONTAINER --- */}
+                  <div className="w-16 h-16 rounded-full border border-white/10 overflow-hidden flex-shrink-0 mt-1 bg-white/5">
+                    {/* 👇 REPLACE URL BELOW WITH YOUR IMAGE URL 👇 */}
+                    <img 
+                      src="https://via.placeholder.com/150" 
+                      alt="Sahil Profile" 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  <div className="content-wrapper opacity-0 invisible w-full ml-10 mt-1">
-                      <h2 className="text-[#00F3FF] tracking-[0.2em] border-b border-[#00F3FF]/30 pb-2 text-base font-bold">SYSTEM_PROFILE.EXE</h2>
+
+                  {/* Name and Title */}
+                  <div className="flex-1">
+                    <h3 className="text-amber-200/70 font-mono text-[10px] tracking-[0.3em] uppercase mb-1">Academic & Growth Profile</h3>
+                    {/* Reduced font size for smaller space */}
+                    <h1 className="text-2xl md:text-[28px] font-serif text-white mb-3 leading-tight">
+                      Sahil
+                    </h1>
+                    <div className="w-12 h-[1px] bg-amber-200/40" />
                   </div>
                 </div>
 
-                <div className="content-wrapper opacity-0 invisible mt-6">
-                  <div className="text-sm md:text-base text-gray-300 mb-8 font-mono">
-                      <p className="text-[#00F3FF]/80 animate-pulse">{'>'} STATUS: ONLINE</p>
-                      <p className="mt-4 text-gray-100">SOFTWARE ENGINEER SPECIALIZING IN <br/><span className="text-purple-400 font-bold">REACT.JS</span> & <span className="text-[#00F3FF] font-bold">GSAP</span></p>
-                      <p className="mt-2 text-gray-400 text-xs md:text-sm">[ C++ | Python | Data Structures ]</p>
+                {/* Bio & Actions Section */}
+                <div className="content-wrapper opacity-0 invisible translate-y-4">
+                  
+                  {/* Status Indicator */}
+                  <p className="text-amber-200/60 font-mono text-[9px] tracking-[0.2em] animate-pulse mb-3">
+                    {'>'} CURRENT_PATH: CS_STUDENT // EVOLVING
+                  </p>
+
+                  {/* Eager Student Bio - Text slightly condensed */}
+                  <p className="text-slate-300 text-xs md:text-sm leading-relaxed font-light mb-6 max-w-sm">
+                    A <span className="text-white font-normal">Computer Science Student</span> driven by curiosity. 
+                    I study the craft, seeking 
+                    challenges in React, Python, and the art of smooth motion.
+                  </p>
+                  
+                  {/* Action Buttons */}
+                  <div className="flex gap-3 w-full">
+                    <button className="flex-1 py-2.5 rounded-full border border-white/10 bg-white/5 text-white text-[9px] tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-500">
+                      My Journey
+                    </button>
+                    <button className="flex-1 py-2.5 rounded-full bg-amber-200/90 text-black text-[9px] tracking-widest uppercase font-bold hover:bg-white transition-all duration-500">
+                      Get Resume
+                    </button>
                   </div>
-                  <div className="flex gap-4 w-full">
-                      <button className="flex-1 py-3 border border-[#00F3FF] text-[#00F3FF] text-xs font-bold uppercase hover:bg-[#00F3FF] hover:text-black transition-all">Init Demo</button>
-                      <button className="flex-1 py-3 border border-purple-500 text-purple-500 text-xs font-bold uppercase hover:bg-purple-500 hover:text-white transition-all">Resume</button>
+
+                  {/* Learning Tags */}
+                  <div className="mt-6 pt-5 border-t border-white/5">
+                    <p className="text-[9px] text-slate-500 uppercase tracking-[0.2em] mb-3">Eagerly Learning:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {['Advanced DSA', 'System Design', 'UI Physics'].map((skill, i) => (
+                        <div key={i} className="px-2.5 py-0.5 bg-white/5 border border-white/5 rounded-full text-[9px] text-slate-400 font-mono">
+                          {skill}
+                        </div>
+                      ))}
+                    </div>
                   </div>
+
                 </div>
               </div>
 
