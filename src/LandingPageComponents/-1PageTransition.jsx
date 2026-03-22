@@ -12,6 +12,7 @@ const CircleRevealTransition = ({
   originPosition = "center"
 }) => {
   const colorLayerRef = useRef(null);
+  const blockerRef = useRef(null); // ✅ The invisible shield
 
   const getOriginCoordinates = (position) => {
     const positions = {
@@ -38,7 +39,12 @@ const CircleRevealTransition = ({
           scrub: 1,
           onUpdate: (self) => {
             const p = self.progress;
+            
+            // If transition is actively happening (between 1% and 99%)
             if (p > 0 && p < 1) {
+              // Turn ON the invisible shield to block all hovers/clicks
+              gsap.set(blockerRef.current, { display: "block" });
+              
               // FORCE visibility and high z-index for the color and next section
               gsap.set(colorLayerRef.current, { display: "block", zIndex: 40 });
               gsap.set(nextSectionRef.current, { 
@@ -47,10 +53,14 @@ const CircleRevealTransition = ({
                 zIndex: 41, // Section sits just above the color layer
                 visibility: "visible" 
               });
+            } else {
+              // Transition is exactly 0% or exactly 100% -> Turn OFF the shield
+              gsap.set(blockerRef.current, { display: "none" });
             }
           },
           onLeave: () => {
             gsap.set(colorLayerRef.current, { display: "none" });
+            gsap.set(blockerRef.current, { display: "none" }); // Failsafe
           }
         }
       });
@@ -66,19 +76,28 @@ const CircleRevealTransition = ({
     });
     
     return () => ctx.revert();
-  }, [originPosition, triggerRef]);
+  }, [originPosition, triggerRef, nextSectionRef]);
 
   return (
-    // This div acts as the solid color "wall" that reveals the next page
-    <div 
-      ref={colorLayerRef}
-      className="fixed inset-0 pointer-events-none"
-      style={{ 
-        backgroundColor: color1, // This is where your pink/purple/blue comes from
-        display: "none",
-        willChange: "clip-path"
-      }}
-    />
+    <>
+      {/* ✅ INVISIBLE SHIELD: Sits above everything (z-50) and blocks pointers during animation */}
+      <div 
+        ref={blockerRef}
+        className="fixed inset-0 z-50 pointer-events-auto"
+        style={{ display: "none", background: "transparent" }}
+      />
+
+      {/* This div acts as the solid color "wall" that reveals the next page */}
+      <div 
+        ref={colorLayerRef}
+        className="fixed inset-0 pointer-events-none"
+        style={{ 
+          backgroundColor: color1, // This is where your pink/purple/blue comes from
+          display: "none",
+          willChange: "clip-path"
+        }}
+      />
+    </>
   );
 };
 
