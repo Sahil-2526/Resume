@@ -41,9 +41,9 @@ const AnimatedWaveFooter = memo(({ triggerRef }) => {
   const waveSvg = `url("data:image/svg+xml,%3Csvg viewBox='0 0 1000 150' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cpath fill='%230F172A' d='M0,150 L0,75 Q250,150 500,75 T1000,75 L1000,150 Z'/%3E%3C/svg%3E")`;
 
   const socialLinks = [
-    { icon: <FaLinkedin />, url: "https://linkedin.com/in/yourprofile", hoverColor: "hover:text-[#0077b5]" },
-    { icon: <FaGithub />, url: "https://github.com/yourusername", hoverColor: "hover:text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]" },
-    { icon: <SiLeetcode />, url: "https://leetcode.com/yourusername", hoverColor: "hover:text-[#ffa116]" }
+    { icon: <FaLinkedin />, url: "https://www.linkedin.com/in/sahil-b870593a4/", hoverColor: "hover:text-[#0077b5]" },
+    { icon: <FaGithub />, url: "https://github.com/Sahil-2526", hoverColor: "hover:text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]" },
+    { icon: <SiLeetcode />, url: "https://leetcode.com/u/suSEy99kOj/", hoverColor: "hover:text-[#ffa116]" }
   ];
 
   return (
