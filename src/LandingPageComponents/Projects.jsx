@@ -50,12 +50,10 @@ const AutumnSection = () => {
   const windLinesRef = useRef([]);
   const cardsRef = useRef([]);
   
-  // --- STATE ---
   const [activeIndex, setActiveIndex] = useState(0); 
   const [isMobile, setIsMobile] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
 
-  // --- 1. RESPONSIVE CHECK ---
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize(); 
@@ -63,7 +61,6 @@ const AutumnSection = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // --- 2. AUTO-PLAY ENGINE ---
   const handleNext = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % PROJECT_DATA.length);
   }, []);
@@ -96,7 +93,6 @@ const AutumnSection = () => {
     if (action === 'prev') handlePrev();
   };
 
-  // --- 3. CAROUSEL ANIMATION (GSAP) ---
   useEffect(() => {
     const cards = cardsRef.current;
     const len = PROJECT_DATA.length;
@@ -113,10 +109,10 @@ const AutumnSection = () => {
       };
 
       if (dist === 0) {
-        config = { ...config, xPercent: 0, scale: 1, height: isMobile ? "55vh" : "65vh", opacity: 1, zIndex: 20, filter: "blur(0px) brightness(1)" };
+        config = { ...config, xPercent: 0, scale: 1, height: isMobile ? "52vh" : "60vh", opacity: 1, zIndex: 20, filter: "blur(0px) brightness(1)" };
       } else if (Math.abs(dist) === 1) {
         const spacing = isMobile ? 65 : 120; 
-        config = { ...config, xPercent: dist * spacing, scale: 0.85, height: isMobile ? "45vh" : "50vh", opacity: 0.5, zIndex: 10, filter: "blur(4px) brightness(0.8)" };
+        config = { ...config, xPercent: dist * spacing, scale: 0.85, height: isMobile ? "42vh" : "50vh", opacity: 0.5, zIndex: 10, filter: "blur(4px) brightness(0.8)" };
       } else if (Math.abs(dist) === 2 && !isMobile) {
         config = { ...config, xPercent: dist * 180, scale: 0.7, height: "35vh", opacity: 0.2, zIndex: 5, filter: "blur(6px) brightness(0.6)" };
       } else {
@@ -127,7 +123,6 @@ const AutumnSection = () => {
     });
   }, [activeIndex, isMobile]);
 
-  // --- 4. BACKGROUND EFFECTS ---
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(fadeOverlayRef.current, { opacity: 1 }, {
@@ -135,9 +130,7 @@ const AutumnSection = () => {
         scrollTrigger: { trigger: sectionRef.current, start: "top bottom", end: "top 30%", scrub: 1 }
       });
 
-      // Holographic Tech Leaves Animation
       leavesRef.current.forEach((leaf) => {
-        // Randomize initial position above screen
         gsap.set(leaf, { 
           x: gsap.utils.random(-100, window.innerWidth + 100), 
           y: -100, 
@@ -145,19 +138,17 @@ const AutumnSection = () => {
           scale: gsap.utils.random(0.4, 0.9) 
         });
         
-        // Falling animation
         gsap.to(leaf, { 
           y: window.innerHeight + 150, 
-          x: `+=${gsap.utils.random(-300, 300)}`, // Sway left/right
-          rotation: `+=${gsap.utils.random(360, 720)}`, // Twirl
-          duration: gsap.utils.random(12, 25), // Slow, drifting fall
+          x: `+=${gsap.utils.random(-300, 300)}`, 
+          rotation: `+=${gsap.utils.random(360, 720)}`, 
+          duration: gsap.utils.random(12, 25), 
           repeat: -1, 
           ease: "none", 
           delay: gsap.utils.random(0, 10) 
         });
       });
 
-      // Data Stream (Wind) Lines Animation
       windLinesRef.current.forEach((line, index) => {
         gsap.fromTo(line, { x: -window.innerWidth * 0.5, opacity: 0 }, { x: window.innerWidth * 1.5, opacity: 0.3, duration: gsap.utils.random(4, 8), repeat: -1, ease: "sine.inOut", delay: index * 0.5 });
       });
@@ -166,20 +157,17 @@ const AutumnSection = () => {
   }, []);
 
   return (
-    // Background updated to Obsidian Tech Theme (#0B0F19)
     <div ref={sectionRef} className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-[#0B0F19]">
       
       {/* --- BACKGROUNDS & AMBIENT GLOWS --- */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0B0F19] via-[#0F172A] to-[#0B0F19] -z-10" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,243,255,0.03)_0%,transparent_70%)] pointer-events-none -z-10" />
       
-      {/* Glowing Orbs matching your Home transitions */}
       <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-blue-900/20 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-5%] w-[35vw] h-[35vw] bg-purple-900/15 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute top-[20%] left-[20%] w-[45vw] h-[45vw] bg-cyan-900/10 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
-      {/* Transition Fade Overlay */}
       <div ref={fadeOverlayRef} className="absolute inset-0 bg-[#0B0F19] z-10 pointer-events-none" />
 
       {/* --- WIND / DATA STREAM LAYER --- */}
@@ -197,7 +185,6 @@ const AutumnSection = () => {
       {/* --- HOLOGRAPHIC TECH LEAVES LAYER --- */}
       <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden">
         {[...Array(40)].map((_, i) => {
-           // Assign tech-themed glowing colors to leaves (Cyan, Blue, Purple)
            const leafColors = ['#00F3FF', '#3B82F6', '#A855F7', '#8B5CF6', '#06B6D4', '#2DD4BF'];
            const leafColor = leafColors[i % leafColors.length];
 
@@ -217,16 +204,17 @@ const AutumnSection = () => {
       </div>
 
       {/* --- GALLERY SECTION --- */}
-      <div className="relative z-40 w-full h-full flex flex-col items-center justify-center pointer-events-none">
+      {/* ADJUSTED PADDING TOP: pt-10 md:pt-16 brings everything a little bit up */}
+      <div className="relative z-40 w-full h-full flex flex-col items-center justify-center pt-10 md:pt-16 pointer-events-none">
         
         {/* Title */}
-        <div className="absolute top-8 md:top-12 text-center z-50 pointer-events-auto">
+        <div className="text-center z-50 pointer-events-auto mb-3 md:mb-4">
             <h2 className="text-[#00F3FF] tracking-[0.4em] text-sm md:text-base font-black uppercase drop-shadow-[0_0_8px_rgba(0,243,255,0.5)] font-['Orbitron']">FEATURED PROJECTS</h2>
-            <div className="w-12 h-[2px] bg-[#00F3FF] mx-auto mt-3 opacity-50"></div>
+            <div className="w-12 h-[2px] bg-[#00F3FF] mx-auto mt-2 opacity-50"></div>
         </div>
 
         {/* Carousel Container */}
-        <div className="relative w-full h-[70vh] flex items-center justify-center perspective-1000 mt-6 md:mt-0 pointer-events-auto">
+        <div className="relative w-full h-[65vh] flex items-center justify-center perspective-1000 pointer-events-auto">
           {PROJECT_DATA.map((item, index) => {
             const isActive = activeIndex === index;
             
@@ -238,22 +226,17 @@ const AutumnSection = () => {
                 setActiveIndex(index);
                 manualInteraction(); 
               }}
-              // Glassmorphism Card matched to Obsidian/Slate tech theme
               className="absolute w-[80vw] md:w-[22vw] rounded-xl md:rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0F172A]/80 backdrop-blur-md border border-[#00F3FF]/20 cursor-pointer will-change-transform group"
               style={{ 
                 left: '50%',
                 marginLeft: isMobile ? '-40vw' : '-11vw',
               }}
             >
-              {/* Project Image */}
               <div className="relative w-full h-full">
                 <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80" loading="eager" />
-                
-                {/* Dark tech overlay on the image */}
                 <div className="absolute inset-0 bg-[#0B0F19]/40 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500"></div>
               </div>
               
-              {/* Slate Blended Project Details Overlay */}
               <div className={`absolute bottom-0 left-0 right-0 p-5 md:p-6 bg-gradient-to-t from-[#0B0F19] via-[#0F172A]/95 to-transparent transition-all duration-500 ${isActive ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
                 
                 <h3 className="text-white font-bold text-lg md:text-xl font-['Orbitron'] mb-2 leading-tight drop-shadow-md group-hover:text-[#00F3FF] transition-colors">
@@ -264,7 +247,6 @@ const AutumnSection = () => {
                   {item.desc}
                 </p>
 
-                {/* Glassy Tech Stack Pills (Cyan tinted) */}
                 <div className="flex flex-wrap gap-2">
                   {item.tech.map((techItem, idx) => (
                     <span key={idx} className="bg-[#00F3FF]/10 backdrop-blur-sm border border-[#00F3FF]/30 text-cyan-100 text-[10px] md:text-xs px-2 py-1 rounded">
@@ -280,7 +262,7 @@ const AutumnSection = () => {
         </div>
 
         {/* CONTROLS */}
-        <div className="absolute bottom-6 md:bottom-10 flex gap-8 md:gap-12 z-[100] pointer-events-auto">
+        <div className="relative mt-3 md:mt-4 flex gap-8 md:gap-12 z-[100] pointer-events-auto">
           <button 
             onClick={() => manualInteraction('prev')}
             className="group flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full border border-[#00F3FF]/30 bg-[#0F172A]/50 backdrop-blur-md hover:bg-[#00F3FF]/20 hover:border-[#00F3FF]/60 active:scale-95 transition-all duration-200 shadow-[0_0_15px_rgba(0,243,255,0.1)] touch-manipulation"
