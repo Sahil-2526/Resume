@@ -26,12 +26,11 @@ const AnimatedWaveFooter = memo(({ triggerRef }) => {
         { opacity: 1, ease: "none" }, 
       0);
 
-      // --- SHIFTED EVEN MORE UP HERE ---
-      // Changed end 'y' from "50vh" to "40vh".
-      // The footer will now float near the vertical center of the screen.
+      // --- ATTACHED TO BOTTOM ---
+      // Container is now 50vh tall. Ending at 50vh means it perfectly touches the bottom edge (50 + 50 = 100vh).
       tl.fromTo(bottomFooterRef.current, 
         { y: "100vh" }, // Start: Off-screen
-        { y: "40vh", ease: "none" }, // End: Shifted higher up
+        { y: "50vh", ease: "none" }, // End: Perfectly attached to bottom
       0);
     });
 
@@ -53,8 +52,8 @@ const AnimatedWaveFooter = memo(({ triggerRef }) => {
       {/* Black/Blur Overlay */}
       <div ref={topOverlayRef} className="absolute top-0 left-0 w-full h-[100vh] bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none" />
 
-      {/* Footer Container - 40vh tall */}
-      <div ref={bottomFooterRef} className="absolute top-0 left-0 w-full h-[40vh] flex flex-col pointer-events-auto shadow-[0_-20px_50px_rgba(0,0,0,0.4)] rounded-[50px] overflow-hidden" style={{ transform: 'translateY(100vh)' }}>
+      {/* Footer Container - Increased to 50vh tall, flat bottom (rounded-t-[50px]) */}
+      <div ref={bottomFooterRef} className="absolute top-25 left-0 w-full h-[50vh] flex flex-col pointer-events-auto shadow-[0_-20px_50px_rgba(0,0,0,0.4)] rounded-t-[50px] overflow-hidden" style={{ transform: 'translateY(100vh)' }}>
         
         {/* 1. THE WAVE DIV (UP) */}
         <div className="relative w-full h-[120px] shrink-0 overflow-hidden leading-[0] pointer-events-none z-10">
@@ -65,7 +64,8 @@ const AnimatedWaveFooter = memo(({ triggerRef }) => {
         </div>
 
         {/* 2. THE SOLID DIV (DOWN) - Slate 900 */}
-        <div className="w-full flex-grow bg-[#0F172A] flex flex-col justify-center items-center pb-6 pt-0 relative z-20">
+        {/* Added pb-16 md:pb-24 to create a large gap at the bottom */}
+        <div className="w-full flex-grow bg-[#0F172A] flex flex-col justify-end md:justify-center items-center pb-16 md:pb-20 pt-0 relative z-20">
           
           {/* Social Icons */}
           <ul className="relative flex justify-center items-center gap-6 md:gap-8 my-2 flex-wrap">
@@ -94,11 +94,11 @@ const AnimatedWaveFooter = memo(({ triggerRef }) => {
             ))}
           </ul>
 
-          <div className="w-16 h-[1px] bg-slate-800 my-1"></div>
+          <div className="w-16 h-[1px] bg-slate-800 my-2"></div>
 
-          {/* Copyright text at the bottom */}
+          {/* Copyright text */}
           <p className="text-slate-500 font-mono tracking-widest text-[0.6rem] md:text-[0.65rem] opacity-70 text-center">
-            Thanks for visiting! &copy; Sahil. 
+            Thanks for visiting! &copy; {new Date().getFullYear()} Sahil. 
           </p>
         </div>
 
