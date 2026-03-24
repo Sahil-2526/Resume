@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CircleRevealTransition = ({ 
+const PageTransition = ({ 
   color1, 
   triggerRef, 
   currentSectionRef,
@@ -101,4 +101,4 @@ const CircleRevealTransition = ({
   );
 };
 
-export default CircleRevealTransition;
+export default PageTransition;

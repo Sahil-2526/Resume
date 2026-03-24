@@ -13,7 +13,7 @@ const SeasonLetter = ({ char }) => (
   </div>
 );
 
-const CVHero = React.forwardRef((props, ref) => {
+const Home = React.forwardRef((props, ref) => {
   const [isMobile, setIsMobile] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
   
@@ -221,4 +221,4 @@ const CVHero = React.forwardRef((props, ref) => {
   );
 });
 
-export default CVHero;
+export default Home;

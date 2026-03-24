@@ -5,7 +5,7 @@ import { FaLinkedin, FaGithub } from "react-icons/fa";
 // Special Icon for LeetCode from Si
 import { SiLeetcode } from "react-icons/si"; 
 
-const AnimatedWaveFooter = memo(({ triggerRef }) => {
+const Footer = memo(({ triggerRef }) => {
   const topOverlayRef = useRef(null);
   const bottomFooterRef = useRef(null);
 
@@ -126,4 +126,4 @@ const AnimatedWaveFooter = memo(({ triggerRef }) => {
   );
 });
 
-export default AnimatedWaveFooter;
+export default Footer;

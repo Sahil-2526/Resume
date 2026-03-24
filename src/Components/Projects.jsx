@@ -15,27 +15,20 @@ const PROJECT_DATA = [
   },
   { 
     id: 2, 
-    title: "3D Basketball Court", 
-    desc: "An immersive, interactive WebGL basketball environment.",
-    tech: ["Three.js", "JavaScript", "WebGL"],
-    img: "https://images.unsplash.com/photo-1519861531473-92002607333e?auto=format&fit=crop&q=80&w=600" 
-  },
-  { 
-    id: 3, 
     title: "Ahouba Techfest Portal", 
     desc: "Official interactive web platform for the university tech festival.",
     tech: ["Frontend", "UI/UX", "CSS3"],
     img: "https://images.unsplash.com/photo-1514477917009-389c76a86b68?auto=format&fit=crop&q=80&w=600" 
   },
   { 
-    id: 4, 
+    id: 3, 
     title: "Developer README", 
     desc: "Dynamic GitHub profile showcasing automated stats and skills.",
     tech: ["Markdown", "APIs", "Design"],
     img: "https://images.unsplash.com/photo-1476820865390-c52aeebb9891?auto=format&fit=crop&q=80&w=600" 
   },
   { 
-    id: 5, 
+    id: 4, 
     title: "Algorithmic Vault", 
     desc: "Optimized solutions repository for 100+ LeetCode problems.",
     tech: ["C++", "Python", "DSA"],
@@ -43,7 +36,7 @@ const PROJECT_DATA = [
   }
 ];
 
-const AutumnSection = () => {
+const Projects = () => {
   const sectionRef = useRef(null);
   const fadeOverlayRef = useRef(null);
   const leavesRef = useRef([]);
@@ -285,4 +278,4 @@ const AutumnSection = () => {
   );
 };
 
-export default AutumnSection;
+export default Projects;

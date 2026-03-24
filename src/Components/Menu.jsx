@@ -1,6 +1,6 @@
 import React from "react";
 
-const GlitchMenu = React.memo(({ onClick, isOpen }) => {
+const Menu = React.memo(({ onClick, isOpen }) => {
   return (
     <button
       onClick={onClick}
@@ -70,4 +70,4 @@ const GlitchMenu = React.memo(({ onClick, isOpen }) => {
   );
 });
 
-export default GlitchMenu;
+export default Menu;

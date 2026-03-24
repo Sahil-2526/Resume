@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const SkillsSection = () => {
+const TechnicalSkills = () => {
   const sectionRef = useRef(null);
   const sunRef = useRef(null);
   const raysRef = useRef(null);
@@ -290,4 +290,4 @@ const SkillsSection = () => {
   );
 };
 
-export default SkillsSection;
+export default TechnicalSkills;

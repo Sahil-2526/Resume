@@ -4,17 +4,16 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // --- EXTERNAL COMPONENTS ---
-import Navbar from './LandingPageComponents/-1NavBar';
-import GlitchMenu from './LandingPageComponents/-1GlitchMenu';
-import OverlayMenu from './LandingPageComponents/-1OverlayMenu';
-import SpringSection from './LandingPageComponents/AboutPage.jsx';
-import SummerSection from './LandingPageComponents/TechnicalSkills.jsx'; 
-import AutumnSection from './LandingPageComponents/Projects.jsx';
-import SecondSection from './LandingPageComponents/ExperienceAndAcadamics.jsx';
-import CircleRevealTransition from './LandingPageComponents/-1PageTransition.jsx'; 
-import AnimatedWaveFooter from './LandingPageComponents/Footer.jsx'; 
-
-import Home from './LandingPageComponents/Home.jsx'; 
+import Navbar from './Components/NavBar';
+import Menu from './Components/Menu';
+import OverlayMenu from './Components/OverlayMenu';
+import About from './Components/AboutPage';
+import TechSkills from './Components/TechnicalSkills'; 
+import Projects from './Components/Projects';
+import Experience from './Components/ExperienceAndAcadamics';
+import PageTransition from './Components/PageTransition'; 
+import Footer from './Components/Footer'; 
+import Home from './Components/Home.jsx'; 
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,7 +37,7 @@ const GokuPage = memo(({ sectionRef }) => (
 // 3. ACADEMICS PAGE (Requires parent ref)
 const SpacePage = memo(({ sectionRef, parent }) => (
   <div ref={sectionRef} style={{ ...fixedPageStyle, zIndex: 8, opacity: 0 }}>
-    <SecondSection father={parent} />
+    <Experience father={parent} />
   </div>
 ));
 
@@ -87,42 +86,42 @@ const LandingPage = () => {
         
         {/* Render all sections (DOM order doesn't affect the GSAP sequence) */}
         <GokuPage sectionRef={sectionRefs.goku} /> {/* 1. Home */}
-        <PageWrapper sectionRef={sectionRefs.spring}><SpringSection /></PageWrapper> {/* 2. About */}
+        <PageWrapper sectionRef={sectionRefs.spring}><About /></PageWrapper> {/* 2. About */}
         <SpacePage sectionRef={sectionRefs.space} parent={PARENT} /> {/* 3. Academics */}
-        <PageWrapper sectionRef={sectionRefs.summer}><SummerSection /></PageWrapper> {/* 4. Skills */}
-        <PageWrapper sectionRef={sectionRefs.autumn}><AutumnSection /></PageWrapper> {/* 5. Projects */}
+        <PageWrapper sectionRef={sectionRefs.summer}><TechSkills /></PageWrapper> {/* 4. Skills */}
+        <PageWrapper sectionRef={sectionRefs.autumn}><Projects /></PageWrapper> {/* 5. Projects */}
 
         {/* --- TRANSITION SEQUENCES --- */}
         
         {/* T1: Home (Goku) -> About (Spring) */}
-        <CircleRevealTransition
+        <PageTransition
           color1="#00F3FF" triggerRef={transitionRefs.t1}
           currentSectionRef={sectionRefs.goku} nextSectionRef={sectionRefs.spring}
           originPosition="top-left"
         />
         
         {/* T2: About (Spring) -> Academics (Space) */}
-        <CircleRevealTransition
+        <PageTransition
           color1="#A855F7" triggerRef={transitionRefs.t2}
           currentSectionRef={sectionRefs.spring} nextSectionRef={sectionRefs.space}
           originPosition="bottom-right"
         />
         
         {/* T3: Academics (Space) -> Skills (Summer) */}
-        <CircleRevealTransition
+        <PageTransition
           color1="#3B82F6" triggerRef={transitionRefs.t3}
           currentSectionRef={sectionRefs.space} nextSectionRef={sectionRefs.summer}
           originPosition="top-right"
         />
         
         {/* T4: Skills (Summer) -> Projects (Autumn) */}
-        <CircleRevealTransition
+        <PageTransition
           color1="#10B981" triggerRef={transitionRefs.t4}
           currentSectionRef={sectionRefs.summer} nextSectionRef={sectionRefs.autumn}
           originPosition="bottom-left"
         />
 
-        <AnimatedWaveFooter triggerRef={transitionRefs.t5} />
+        <Footer triggerRef={transitionRefs.t5} />
       </div>
     </>
   );
@@ -151,7 +150,7 @@ export default function App() {
       
       <div className="fixed top-0 left-0 right-0 z-[1000] pointer-events-auto">
         <Navbar toggleMenu={toggleMenu} />
-        <GlitchMenu onClick={toggleMenu} isOpen={isMenuOpen} />
+        <Menu onClick={toggleMenu} isOpen={isMenuOpen} />
       </div>
 
       <div className="fixed inset-0 z-[999] pointer-events-none">

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useLayoutEffect, useState } from "react";
 import gsap from "gsap";
 
-const HobbiesOverlay = ({ isOpen }) => {
+const OverlayMenu = ({ isOpen }) => {
   const containerRef = useRef(null);
   const linksRef = useRef([]);
   const petalsRef = useRef([]);
@@ -174,4 +174,4 @@ const HobbiesOverlay = ({ isOpen }) => {
   );
 };
 
-export default HobbiesOverlay;
+export default OverlayMenu;
