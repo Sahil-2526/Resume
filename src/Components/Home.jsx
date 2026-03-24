@@ -59,6 +59,44 @@ const Home = React.forwardRef((props, ref) => {
     return () => ctx.revert();
   }, [isMobile]);
 
+  // --- CUSTOM SLOW SMOOTH SCROLL FUNCTION ---
+  const handleScrollToAbout = (e) => {
+    e.preventDefault(); // Prevent default instant anchor jump
+    
+    const target = document.getElementById('about');
+    if (!target) return; // If #about doesn't exist on this page, do nothing
+    
+    const targetPosition = target.getBoundingClientRect().top + window.scrollY;
+    const startPosition = window.scrollY;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+    
+    // Duration in milliseconds (1500ms = 1.5 seconds). Increase for an even slower scroll!
+    const duration = 1500; 
+    
+    // Easing function for a cinematic slow start and slow end
+    const easeInOutQuad = (t, b, c, d) => {
+      t /= d / 2;
+      if (t < 1) return (c / 2) * t * t + b;
+      t--;
+      return (-c / 2) * (t * (t - 2) - 1) + b;
+    };
+    
+    const animation = (currentTime) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+      
+      window.scrollTo(0, run);
+      
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      }
+    };
+    
+    requestAnimationFrame(animation);
+  };
+
   return (
     <div ref={ref} className="fixed inset-0 w-full h-screen bg-[#0B0F19] overflow-hidden" style={{ zIndex: 10 }}>
       
@@ -106,9 +144,13 @@ const Home = React.forwardRef((props, ref) => {
                   
                   {/* Action Buttons */}
                   <div className="flex gap-3 w-full">
-                    <button className="flex-1 py-2.5 rounded-full border border-white/10 bg-white/5 text-white text-[9px] tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-500">
-                      My Journey
-                    </button>
+                    <a 
+                      href="#about"
+                      onClick={handleScrollToAbout}
+                      className="flex-1 flex justify-center items-center py-2.5 rounded-full border border-white/10 bg-white/5 text-white text-[9px] tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-500"
+                    >
+                      Know About Me
+                    </a>
                     
                     {/* View Resume Button */}
                     <button 
@@ -150,7 +192,6 @@ const Home = React.forwardRef((props, ref) => {
           />
 
           {/* Modal Container */}
-          {/* ADDED: mt-12 md:mt-20 to shift the popup down, and h-[80vh] for mobile safety */}
           <div className="relative w-full max-w-4xl h-[80vh] md:h-[85vh] mt-12 md:mt-20 bg-[#0B0F19] border border-[#00F3FF]/30 rounded-xl shadow-[0_0_40px_rgba(0,243,255,0.2)] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-300">
             
             {/* Header Toolbar */}
