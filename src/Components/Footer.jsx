@@ -2,8 +2,8 @@ import React, { memo, useRef, useLayoutEffect } from 'react';
 import gsap from "gsap";
 // Standard FontAwesome Icons
 import { FaLinkedin, FaGithub } from "react-icons/fa"; 
-// Special Icon for LeetCode from Si
-import { SiLeetcode } from "react-icons/si"; 
+// Special Icons for LeetCode and Codeforces from Si
+import { SiLeetcode, SiCodeforces } from "react-icons/si"; 
 
 const Footer = memo(({ triggerRef }) => {
   const topOverlayRef = useRef(null);
@@ -43,7 +43,9 @@ const Footer = memo(({ triggerRef }) => {
   const socialLinks = [
     { icon: <FaLinkedin />, url: "https://www.linkedin.com/in/sahil-b870593a4/", hoverColor: "hover:text-[#0077b5]" },
     { icon: <FaGithub />, url: "https://github.com/Sahil-2526", hoverColor: "hover:text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]" },
-    { icon: <SiLeetcode />, url: "https://leetcode.com/u/suSEy99kOj/", hoverColor: "hover:text-[#ffa116]" }
+    { icon: <SiLeetcode />, url: "https://leetcode.com/u/suSEy99kOj/", hoverColor: "hover:text-[#ffa116]" },
+    // ADDED CODEFORCES HERE
+    { icon: <SiCodeforces />, url: "https://codeforces.com/profile/Sahil-2526", hoverColor: "hover:text-[#FF3333]" }
   ];
 
   return (
