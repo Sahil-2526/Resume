@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import eva from "../assets/wintertree.png";
@@ -35,6 +35,12 @@ const AcademicsPage = () => {
   const containerRef = useRef(null); 
   const ghostRef = useRef(null); 
   const snowContainerRef = useRef(null);
+  
+  const scrollTextRef = useRef(null); 
+  const scrollIndicatorRef = useRef(null); // New ref for the floating animation
+  
+  // State to track if the user has scrolled down the container
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useLayoutEffect(() => {
     let mm = gsap.matchMedia();
@@ -61,7 +67,26 @@ const AcademicsPage = () => {
         });
       });
 
-      // 2. CARDS 3D ANIMATION
+      // 2. SCROLL INDICATOR ANIMATIONS
+      // Glowing pulse for the text
+      gsap.to(scrollTextRef.current, {
+        dropShadow: "0 0 20px rgba(0,243,255,1)",
+        repeat: -1,
+        yoyo: true,
+        duration: 1,
+        ease: "sine.inOut"
+      });
+
+      // Smooth floating animation for the whole indicator (text + arrow)
+      gsap.to(scrollIndicatorRef.current, {
+        y: 12,
+        repeat: -1,
+        yoyo: true,
+        duration: 1.5,
+        ease: "sine.inOut"
+      });
+
+      // 3. CARDS 3D ANIMATION
       const cards = gsap.utils.toArray(".card", containerRef.current);
       
       mm.add({
@@ -108,6 +133,16 @@ const AcademicsPage = () => {
     return () => ctx.revert();
   }, []);
 
+  // Handler to toggle scroll indicator visibility
+  const handleScroll = (e) => {
+    // If scrolled down more than 20px, hide the text/arrow. If at the top, show it.
+    if (e.target.scrollTop > 20) {
+      if (!isScrolled) setIsScrolled(true);
+    } else {
+      if (isScrolled) setIsScrolled(false);
+    }
+  };
+
   return (
     // Replaced deep blue winter background with Obsidian/Slate tech background
     <div ref={sectionRef} className="relative w-full h-screen overflow-hidden bg-[#0B0F19]">
@@ -149,10 +184,38 @@ const AcademicsPage = () => {
           <div className="absolute bottom-0 right-0 w-20 h-[2px] bg-[#00F3FF] shadow-[0_0_10px_#00F3FF]" />
         </div>
 
+        {/* --- SCROLL INDICATOR OVERLAY --- */}
+        {/* Outer container handles centering and fade out */}
+        <div className={`absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-none z-[70] transition-opacity duration-500 ${isScrolled ? 'opacity-0' : 'opacity-100'}`}>
+          {/* Inner container handles the smooth GSAP floating animation */}
+          <div ref={scrollIndicatorRef} className="flex flex-col items-center">
+            {/* Text size reduced back to xs/sm */}
+            <span 
+              ref={scrollTextRef}
+              className="text-[#00F3FF] font-['Orbitron'] text-xs md:text-sm tracking-[0.2em] uppercase mb-1 md:mb-2 text-center drop-shadow-[0_0_8px_rgba(0,243,255,0.8)]"
+            >
+              Scroll inside to view
+            </span>
+            {/* SVG size reduced and animate-bounce removed so it uses GSAP float */}
+            <svg 
+              className="w-6 h-6 md:w-8 md:h-8 text-[#00F3FF] drop-shadow-[0_0_12px_rgba(0,243,255,0.9)] opacity-80" 
+              fill="none" 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth="2" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </div>
+        </div>
+
         {/* SCROLLABLE WRAPPER */}
         {/* Background changed to Slate 900 to match glassmorphism of Home */}
         <div 
           ref={containerRef}
+          onScroll={handleScroll}
           className="relative h-full w-full p-4 md:p-8 bg-[#0F172A]/70 backdrop-blur-xl border border-[#00F3FF]/20 shadow-[0_0_40px_rgba(0,243,255,0.05)] overflow-y-auto overflow-x-hidden pointer-events-auto no-scrollbar rounded-md"
         >
           
