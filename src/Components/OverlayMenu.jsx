@@ -36,7 +36,7 @@ const OverlayMenu = ({ isOpen }) => {
       id: "04", 
       label: "Reading", 
       desc: "KNOWLEDGE ACQUISITION", 
-      details: "Deep-diving into tech blogs, documentation, and non-fiction. Constant reading fuels my curiosity for emerging technologies.",
+      details: "Deep-diving into tech blogs, documentation, fiction, and non-fiction. Constant reading fuels my curiosity for emerging technologies.",
       accent: "#3B82F6" // Blue
     },
     { 

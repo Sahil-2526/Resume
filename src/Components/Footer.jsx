@@ -53,7 +53,7 @@ const Footer = memo(({ triggerRef }) => {
       <div ref={topOverlayRef} className="absolute top-0 left-0 w-full h-[100vh] bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none" />
 
       {/* Footer Container - Increased to 50vh tall, flat bottom (rounded-t-[50px]) */}
-      <div ref={bottomFooterRef} className="absolute top-25 left-0 w-full h-[50vh] flex flex-col pointer-events-auto shadow-[0_-20px_50px_rgba(0,0,0,0.4)] rounded-t-[50px] overflow-hidden" style={{ transform: 'translateY(100vh)' }}>
+      <div ref={bottomFooterRef} className="absolute top-5 left-0 w-full h-[50vh] flex flex-col pointer-events-auto shadow-[0_-20px_50px_rgba(0,0,0,0.4)] rounded-t-[50px] overflow-hidden" style={{ transform: 'translateY(100vh)' }}>
         
         {/* 1. THE WAVE DIV (UP) */}
         <div className="relative w-full h-[120px] shrink-0 overflow-hidden leading-[0] pointer-events-none z-10">

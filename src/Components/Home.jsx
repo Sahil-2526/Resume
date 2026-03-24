@@ -4,6 +4,7 @@ import gsap from "gsap";
 // 👇 1. IMPORT YOUR PDF RESUME HERE 👇
 // Make sure to compile your .tex to a .pdf and save it in assets!
 import resumePDF from '../assets/Sahil_Resume.pdf'; 
+import Sahil from '../assets/sahil.jpeg'; // Your profile picture for the home card
 
 // Clean, Elegant Minimal Typography for the Side Name
 const SeasonLetter = ({ char }) => (
@@ -15,14 +16,12 @@ const SeasonLetter = ({ char }) => (
 
 const Home = React.forwardRef((props, ref) => {
   const [isMobile, setIsMobile] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(true);
   
   // State to control the Resume Modal
   const [showResume, setShowResume] = useState(false);
   
   const containerRef = useRef(null); 
   const contentBoxRef = useRef(null);
-  const toggleBtnRef = useRef(null); 
 
   // Handle Responsive Sizing
   useEffect(() => {
@@ -42,34 +41,23 @@ const Home = React.forwardRef((props, ref) => {
       // Gentle floating animation for the whole container
       gsap.to(containerRef.current, { y: -10, duration: 3, ease: "sine.inOut", yoyo: true, repeat: -1 });
 
-      if (isExpanded) {
-        tl.to(contentBoxRef.current, {
-          width: isMobile ? "90vw" : 400, 
-          height: "auto", 
-          borderRadius: "24px", 
-          backgroundColor: "rgba(255, 255, 255, 0.03)", 
-          borderColor: "rgba(255, 255, 255, 0.1)",
-          boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)", 
-          duration: 0.8, 
-          ease: "expo.out"
-        })
-        .to(toggleBtnRef.current, { rotation: 0, duration: 0.5 }, "<")
-        .to(".content-wrapper", { opacity: 1, visibility: "visible", y: 0, duration: 0.4, stagger: 0.1 });
-      } else {
-        tl.to(".content-wrapper", { opacity: 0, y: 10, duration: 0.2 })
-        .to(contentBoxRef.current, {
-          width: 60, height: 60, borderRadius: "50%", 
-          backgroundColor: "rgba(255, 255, 255, 0.1)", 
-          borderColor: "rgba(255, 255, 255, 0.2)", 
-          duration: 0.5,
-          ease: "back.in(1.2)"
-        }, "<")
-        .to(toggleBtnRef.current, { rotation: 135, scale: 1.1, duration: 0.4 }, "<");
-      }
+      // Card intro animation (always expanded)
+      tl.to(contentBoxRef.current, {
+        width: isMobile ? "90vw" : 400, 
+        height: "auto", 
+        borderRadius: "24px", 
+        backgroundColor: "rgba(255, 255, 255, 0.03)", 
+        borderColor: "rgba(255, 255, 255, 0.1)",
+        boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)", 
+        duration: 0.8, 
+        ease: "expo.out"
+      })
+      .to(".content-wrapper", { opacity: 1, visibility: "visible", y: 0, duration: 0.4, stagger: 0.1 });
+      
     }, containerRef);
     
     return () => ctx.revert();
-  }, [isExpanded, isMobile]);
+  }, [isMobile]);
 
   return (
     <div ref={ref} className="fixed inset-0 w-full h-screen bg-[#0B0F19] overflow-hidden" style={{ zIndex: 10 }}>
@@ -92,20 +80,12 @@ const Home = React.forwardRef((props, ref) => {
         
         <div ref={containerRef} className="pointer-events-auto">
             <div ref={contentBoxRef} className="relative overflow-hidden border border-white/10 backdrop-blur-xl transition-all duration-300">
-              
-              <div 
-                ref={toggleBtnRef} 
-                onClick={() => setIsExpanded(!isExpanded)} 
-                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white/60 cursor-pointer hover:bg-cyan-500/20 hover:text-cyan-300 transition-all z-50"
-              >
-                <span className="text-xl leading-none">{isExpanded ? '−' : '+'}</span>
-              </div>
 
               <div className="p-6 md:p-8">
                 
                 <div className="content-wrapper opacity-0 invisible translate-y-4 flex items-start gap-4 mb-5 pb-5 border-b border-white/5">
-                  <div className="w-16 h-16 rounded-full border border-white/10 overflow-hidden flex-shrink-0 mt-1 bg-white/5 shadow-[0_0_15px_rgba(0,243,255,0.1)]">
-                    <img src="https://via.placeholder.com/150" alt="Sahil Profile" className="w-full h-full object-cover" />
+                  <div className="w-23 h-23 rounded-full border border-white/10 overflow-hidden flex-shrink-0 mt-1 bg-white/5 shadow-[0_0_15px_rgba(0,243,255,0.1)]">
+                    <img src={Sahil} alt="Sahil Profile" className="w-full h-full object-cover object-top transition-transform duration-500 ease-in-out hover:scale-140  " />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-cyan-400/80 font-mono text-[10px] tracking-[0.3em] uppercase mb-1">Academic & Growth Profile</h3>
