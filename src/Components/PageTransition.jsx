@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -7,13 +7,11 @@ gsap.registerPlugin(ScrollTrigger);
 const PageTransition = ({ 
   triggerRef, 
   nextSectionRef,
-  // Kept these props so your App.jsx doesn't break, even though they aren't used here
+  // Kept so App.jsx doesn't break
   currentSectionRef, 
   originPosition, 
   color1 
 }) => {
-  const blockerRef = useRef(null);
-
   useLayoutEffect(() => {
     if (!triggerRef?.current || !nextSectionRef?.current) return;
 
@@ -27,19 +25,19 @@ const PageTransition = ({
         }
       });
 
-      // 1. SETUP: Start the next page slightly pushed down (y: 30vh), slightly shrunk (scale: 0.95), and invisible.
-      // These properties cost almost 0 computing power to prepare.
-      tl.set(blockerRef.current, { display: "block" })
-        .set(nextSectionRef.current, { 
+      // 1. SETUP: Start next page down and invisible.
+      // We set pointerEvents to "none" so it doesn't block your clicks while fading in.
+      tl.set(nextSectionRef.current, { 
           display: "block", 
           visibility: "visible",
           zIndex: 41, 
           opacity: 0,
           y: "30vh", 
-          scale: 0.95 
+          scale: 0.95,
+          pointerEvents: "none" 
         });
 
-      // 2. ANIMATE: Hardware-accelerated glide up to position, full scale, and full visibility.
+      // 2. ANIMATE: Hardware-accelerated glide up
       tl.to(nextSectionRef.current, { 
         opacity: 1,
         y: "0vh",
@@ -47,24 +45,19 @@ const PageTransition = ({
         ease: "none" 
       });
 
-      // 3. END: Turn off the interaction shield
-      tl.set(blockerRef.current, { display: "none" });
+      // 3. END: Turn clicks back on ONLY once the page is fully on screen
+      tl.set(nextSectionRef.current, { 
+          pointerEvents: "auto" 
+      });
       
     });
     
     return () => ctx.revert();
   }, [triggerRef, nextSectionRef]);
 
-  return (
-    <>
-      {/* INVISIBLE SHIELD: Blocks ghost clicks during the animation scroll */}
-      <div 
-        ref={blockerRef}
-        className="fixed inset-0 z-50 pointer-events-auto"
-        style={{ display: "none", background: "transparent" }}
-      />
-    </>
-  );
+  // We completely deleted the HTML shield!
+  // Returning null tells React this component only runs background GSAP logic.
+  return null; 
 };
 
 export default PageTransition;
