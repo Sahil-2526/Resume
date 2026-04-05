@@ -1,10 +1,8 @@
 import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import gsap from "gsap";
 
-// 👇 1. IMPORT YOUR PDF RESUME HERE 👇
-// Make sure to compile your .tex to a .pdf and save it in assets!
 import resumePDF from '../assets/Sahil_Resume.pdf'; 
-import Sahil from '../assets/sahil.jpeg'; // Your profile picture for the home card
+import Sahil from '../assets/Sahil.jpeg'; // Your profile picture for the home card
 
 // Clean, Elegant Minimal Typography for the Side Name
 const SeasonLetter = ({ char }) => (
