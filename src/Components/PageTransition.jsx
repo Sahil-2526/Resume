@@ -1,64 +1,60 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react"; // Use this instead of useLayoutEffect
 
 gsap.registerPlugin(ScrollTrigger);
 
 const PageTransition = ({ 
   triggerRef, 
-  currentSectionRef, // We are now actively using this!
-  nextSectionRef,
-  originPosition, 
-  color1 
+  currentSectionRef, 
+  nextSectionRef 
 }) => {
-  useLayoutEffect(() => {
+  
+  useGSAP(() => {
     if (!triggerRef?.current || !nextSectionRef?.current || !currentSectionRef?.current) return;
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: triggerRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true, 
-        }
-      });
-
-      // 1. SETUP: Start next page down, invisible, and crucially, UNCLICKABLE
-      tl.set(nextSectionRef.current, { 
-          display: "block", 
-          visibility: "visible",
-          zIndex: 40, // Put it on top
-          opacity: 0,
-          y: "15vh", // Shorter, cleaner glide
-          scale: 0.95,
-          pointerEvents: "none" // Don't steal clicks while fading
-        });
-
-      // 2. ANIMATE: Hardware-accelerated glide up
-      tl.to(nextSectionRef.current, { 
-        opacity: 1,
-        y: "0vh",
-        scale: 1,
-        ease: "none" 
-      });
-
-      // 3. THE FIX: The exact moment the transition reaches 100%
-      // - Make the NEW section fully interactive
-      // - Completely disable and hide the OLD section so it can't block your scroll/clicks
-      tl.set(nextSectionRef.current, { pointerEvents: "auto" });
-      tl.set(currentSectionRef.current, { 
-          pointerEvents: "none",
-          visibility: "hidden", 
-          opacity: 0 
-      });
-      
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: triggerRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        // Force refresh to ensure positions are calculated correctly
+        invalidateOnRefresh: true, 
+      }
     });
-    
-    return () => ctx.revert();
-  }, [triggerRef, nextSectionRef, currentSectionRef]);
 
-  // No HTML rendered here, just clean GSAP logic
+    // 1. SETUP: Prepare next section
+    tl.set(nextSectionRef.current, { 
+      display: "block", 
+      visibility: "visible",
+      zIndex: 40,
+      opacity: 0,
+      y: "15vh",
+      scale: 0.95,
+      pointerEvents: "all" // Keep this "all" if you want buttons clickable during transition
+    });
+
+    // 2. ANIMATE: Fade and Scale
+    tl.to(nextSectionRef.current, { 
+      opacity: 1,
+      y: "0vh",
+      scale: 1,
+      ease: "none" 
+    });
+
+    // 3. THE CLEANUP: Clear the old section
+    // Use 'onComplete' and 'onReverseComplete' for better reliability than tl.set
+    tl.to(currentSectionRef.current, {
+      opacity: 0,
+      visibility: "hidden",
+      pointerEvents: "none",
+      duration: 0.1 // A tiny duration ensures it triggers at the end of scrub
+    }, "<"); // Starts at the same time as the fade in
+
+  }, { scope: triggerRef, dependencies: [triggerRef, nextSectionRef, currentSectionRef] });
+
   return null; 
 };
 
