@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback, memo, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+// REMOVED: BrowserRouter as Router
+import { Routes, Route, useLocation } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -23,109 +24,36 @@ const fixedPageStyle = {
 };
 
 // --- MEMOIZED SECTIONS ---
-
-// 1. HOME PAGE
 const GokuPage = memo(({ sectionRef }) => (
   <div ref={sectionRef} style={{ ...fixedPageStyle, zIndex: 10, opacity: 1, backgroundColor: '#030712' }}>
     <div className="absolute inset-0 bg-blue-600/5 mix-blend-screen pointer-events-none" />
-    <div className="relative z-20 w-full h-full pointer-events-auto">
-      <Home H={true} /> 
-    </div>
+    <Home />
   </div>
 ));
 
-// 3. ACADEMICS PAGE (Requires parent ref)
-const SpacePage = memo(({ sectionRef, parent }) => (
-  <div ref={sectionRef} style={{ ...fixedPageStyle, zIndex: 8, opacity: 0 }}>
-    <Experience father={parent} />
+const SpringPage = memo(({ sectionRef }) => (
+  <div ref={sectionRef} style={{ ...fixedPageStyle, zIndex: 1, opacity: 0, backgroundColor: '#020617' }}>
+    <About />
   </div>
 ));
 
-// GENERIC PAGE WRAPPER (Used for About, Skills, Projects)
-const PageWrapper = memo(({ sectionRef, children }) => (
-  <div ref={sectionRef} style={{ ...fixedPageStyle, zIndex: 1, opacity: 0 }}>
-    {children}
+const WinterPage = memo(({ sectionRef }) => (
+  <div ref={sectionRef} style={{ ...fixedPageStyle, zIndex: 1, opacity: 0, backgroundColor: '#0f172a' }}>
+    <Experience />
   </div>
 ));
 
-// --- LANDING PAGE COMPONENT ---
-const LandingPage = () => {
-  const PARENT = useRef(null);
-  const transitionRefs = { 
-    t1: useRef(null), t2: useRef(null), t3: useRef(null), t4: useRef(null), t5: useRef(null) 
-  };
-  const sectionRefs = { 
-    goku: useRef(null), space: useRef(null), spring: useRef(null), summer: useRef(null), autumn: useRef(null) 
-  };
+const SummerPage = memo(({ sectionRef }) => (
+  <div ref={sectionRef} style={{ ...fixedPageStyle, zIndex: 1, opacity: 0, backgroundColor: '#020617' }}>
+    <TechSkills />
+  </div>
+));
 
-  return (
-    <>
-      {/* --- SCROLL TRACK --- 
-          IDs updated to match the new logical flow 
-      */}
-      <div ref={PARENT} className="relative w-full" style={{ height: 'auto', minHeight: '1500vh' }}>
-        <div id="home" className="h-screen" /> 
-        
-        <div ref={transitionRefs.t1} className="h-[300vh]" />
-        <div id="about" className="h-[300vh] bg-transparent" />
-        
-        <div ref={transitionRefs.t2} className="h-[300vh]" />
-        <div id="academics" className="h-[100vh]" />
-        
-        <div ref={transitionRefs.t3} className="h-[300vh]" />
-        <div id="skills" className="h-[100vh]" />
-        
-        <div ref={transitionRefs.t4} className="h-[300vh]" />
-        <div id="projects" className="h-[100vh]" />
-        
-        <div ref={transitionRefs.t5} className="h-[150vh]" />
-      </div>
-
-      {/* --- VISUAL LAYERS --- */}
-      <div className="fixed inset-0 w-full h-screen overflow-hidden pointer-events-none">
-        
-        {/* Render all sections (DOM order doesn't affect the GSAP sequence) */}
-        <GokuPage sectionRef={sectionRefs.goku} /> {/* 1. Home */}
-        <PageWrapper sectionRef={sectionRefs.spring}><About /></PageWrapper> {/* 2. About */}
-        <SpacePage sectionRef={sectionRefs.space} parent={PARENT} /> {/* 3. Academics */}
-        <PageWrapper sectionRef={sectionRefs.summer}><TechSkills /></PageWrapper> {/* 4. Skills */}
-        <PageWrapper sectionRef={sectionRefs.autumn}><Projects /></PageWrapper> {/* 5. Projects */}
-
-        {/* --- TRANSITION SEQUENCES --- */}
-        
-        {/* T1: Home (Goku) -> About (Spring) */}
-        <PageTransition
-          color1="#00F3FF" triggerRef={transitionRefs.t1}
-          currentSectionRef={sectionRefs.goku} nextSectionRef={sectionRefs.spring}
-          originPosition="top-left"
-        />
-        
-        {/* T2: About (Spring) -> Academics (Space) */}
-        <PageTransition
-          color1="#A855F7" triggerRef={transitionRefs.t2}
-          currentSectionRef={sectionRefs.spring} nextSectionRef={sectionRefs.space}
-          originPosition="bottom-right"
-        />
-        
-        {/* T3: Academics (Space) -> Skills (Summer) */}
-        <PageTransition
-          color1="#3B82F6" triggerRef={transitionRefs.t3}
-          currentSectionRef={sectionRefs.space} nextSectionRef={sectionRefs.summer}
-          originPosition="top-right"
-        />
-        
-        {/* T4: Skills (Summer) -> Projects (Autumn) */}
-        <PageTransition
-          color1="#10B981" triggerRef={transitionRefs.t4}
-          currentSectionRef={sectionRefs.summer} nextSectionRef={sectionRefs.autumn}
-          originPosition="bottom-left"
-        />
-
-        <Footer triggerRef={transitionRefs.t5} />
-      </div>
-    </>
-  );
-};
+const AutumnPage = memo(({ sectionRef }) => (
+  <div ref={sectionRef} style={{ ...fixedPageStyle, zIndex: 1, opacity: 0, backgroundColor: '#030712' }}>
+    <Projects />
+  </div>
+));
 
 // --- SCROLL RESET HELPER ---
 const ScrollToTop = () => {
@@ -144,8 +72,26 @@ export default function App() {
   const toggleMenu = useCallback(() => setIsMenuOpen(v => !v), []);
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
 
+  // Refs for ScrollTriggers and Sections
+  const sectionRefs = {
+    goku: useRef(null),
+    spring: useRef(null),
+    winter: useRef(null),
+    summer: useRef(null),
+    autumn: useRef(null)
+  };
+
+  const transitionRefs = {
+    t1: useRef(null),
+    t2: useRef(null),
+    t3: useRef(null),
+    t4: useRef(null),
+    t5: useRef(null)
+  };
+
   return (
-    <Router>
+    // <Router> WAS REMOVED FROM HERE
+    <>
       <ScrollToTop />
       
       <div className="fixed top-0 left-0 right-0 z-[1000] pointer-events-auto">
@@ -153,15 +99,53 @@ export default function App() {
         <Menu onClick={toggleMenu} isOpen={isMenuOpen} />
       </div>
 
-      <div className="fixed inset-0 z-[999] pointer-events-none">
-        <div className="pointer-events-auto">
-          <OverlayMenu isOpen={isMenuOpen} closeMenu={closeMenu} />
-        </div>
-      </div>
+      <div className="relative">
+        <OverlayMenu isOpen={isMenuOpen} />
 
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-      </Routes>
-    </Router>
+        {/* SECTION LAYERS */}
+        <GokuPage sectionRef={sectionRefs.goku} />
+        <SpringPage sectionRef={sectionRefs.spring} />
+        <WinterPage sectionRef={sectionRefs.winter} />
+        <SummerPage sectionRef={sectionRefs.summer} />
+        <AutumnPage sectionRef={sectionRefs.autumn} />
+
+        {/* CLONE TRACKS FOR SCROLLING */}
+        <div className="relative z-0">
+          <div id="home" ref={transitionRefs.t1} className="h-[300vh]" />
+          <div id="about" ref={transitionRefs.t2} className="h-[300vh]" />
+          <div id="academics" ref={transitionRefs.t3} className="h-[300vh]" />
+          <div id="skills" ref={transitionRefs.t4} className="h-[300vh]" />
+          <div id="projects" ref={transitionRefs.t5} className="h-[300vh]" />
+        </div>
+
+        {/* TRANSITION LOGIC */}
+        <PageTransition
+          color1="#3B82F6" triggerRef={transitionRefs.t1}
+          currentSectionRef={sectionRefs.goku} nextSectionRef={sectionRefs.spring}
+          originPosition="top-left"
+        />
+        
+        <PageTransition
+          color1="#A855F7" triggerRef={transitionRefs.t2}
+          currentSectionRef={sectionRefs.spring} nextSectionRef={sectionRefs.winter}
+          originPosition="bottom-right"
+        />
+
+        <PageTransition
+          color1="#00F3FF" triggerRef={transitionRefs.t3}
+          currentSectionRef={sectionRefs.winter} nextSectionRef={sectionRefs.summer}
+          originPosition="top-right"
+        />
+        
+        <PageTransition
+          color1="#10B981" triggerRef={transitionRefs.t4}
+          currentSectionRef={sectionRefs.summer} nextSectionRef={sectionRefs.autumn}
+          originPosition="bottom-left"
+        />
+
+        <Footer triggerRef={transitionRefs.t5} />
+      </div>
+    </>
+    // </Router> WAS REMOVED FROM HERE
   );
 }
