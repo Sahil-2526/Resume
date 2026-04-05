@@ -12,7 +12,7 @@ const PageTransition = ({
   originPosition = "center"
 }) => {
   const colorLayerRef = useRef(null);
-  const blockerRef = useRef(null); // ✅ The invisible shield
+  const blockerRef = useRef(null);
 
   const getOriginCoordinates = (position) => {
     const positions = {
@@ -30,49 +30,38 @@ const PageTransition = ({
 
     const ctx = gsap.context(() => {
       const origin = getOriginCoordinates(originPosition);
+      const clipFrom = `circle(0% at ${origin.x}% ${origin.y}%)`;
+      const clipTo = `circle(150% at ${origin.x}% ${origin.y}%)`;
       
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: triggerRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: 1,
-          onUpdate: (self) => {
-            const p = self.progress;
-            
-            // If transition is actively happening (between 1% and 99%)
-            if (p > 0 && p < 1) {
-              // Turn ON the invisible shield to block all hovers/clicks
-              gsap.set(blockerRef.current, { display: "block" });
-              
-              // FORCE visibility and high z-index for the color and next section
-              gsap.set(colorLayerRef.current, { display: "block", zIndex: 40 });
-              gsap.set(nextSectionRef.current, { 
-                display: "block", 
-                opacity: 1, 
-                zIndex: 41, // Section sits just above the color layer
-                visibility: "visible" 
-              });
-            } else {
-              // Transition is exactly 0% or exactly 100% -> Turn OFF the shield
-              gsap.set(blockerRef.current, { display: "none" });
-            }
-          },
-          onLeave: () => {
-            gsap.set(colorLayerRef.current, { display: "none" });
-            gsap.set(blockerRef.current, { display: "none" }); // Failsafe
-          }
+          scrub: 1, // The timeline now automatically syncs visibility with this 1-second delay
         }
       });
 
-      // Animate the COLOR LAYER and the NEXT SECTION together
-      const clipFrom = `circle(0% at ${origin.x}% ${origin.y}%)`;
-      const clipTo = `circle(150% at ${origin.x}% ${origin.y}%)`;
+      // 1. START: Turn on the shield, color layer, and prepare the next section
+      tl.set([colorLayerRef.current, blockerRef.current], { display: "block" })
+        .set(colorLayerRef.current, { zIndex: 40 })
+        .set(nextSectionRef.current, { 
+          display: "block", 
+          opacity: 1, 
+          zIndex: 41, 
+          visibility: "visible" 
+        });
 
+      // 2. ANIMATE: Expand the clip-path
       tl.fromTo([colorLayerRef.current, nextSectionRef.current], 
         { clipPath: clipFrom, webkitClipPath: clipFrom },
-        { clipPath: clipTo, webkitClipPath: clipTo, ease: "none" }
+        { clipPath: clipTo, webkitClipPath: clipTo, ease: "none" },
+        "<" // Starts at the exact same time as the setup above
       );
+
+      // 3. END: Turn off the color layer and the invisible shield once the circle is fully expanded
+      tl.set([colorLayerRef.current, blockerRef.current], { display: "none" });
+      
     });
     
     return () => ctx.revert();
@@ -80,19 +69,19 @@ const PageTransition = ({
 
   return (
     <>
-      {/* ✅ INVISIBLE SHIELD: Sits above everything (z-50) and blocks pointers during animation */}
+      {/* INVISIBLE SHIELD: Blocks clicks/hovers during animation */}
       <div 
         ref={blockerRef}
         className="fixed inset-0 z-50 pointer-events-auto"
         style={{ display: "none", background: "transparent" }}
       />
 
-      {/* This div acts as the solid color "wall" that reveals the next page */}
+      {/* COLOR WALL: Reveals the next page */}
       <div 
         ref={colorLayerRef}
         className="fixed inset-0 pointer-events-none"
         style={{ 
-          backgroundColor: color1, // This is where your pink/purple/blue comes from
+          backgroundColor: color1,
           display: "none",
           willChange: "clip-path"
         }}
