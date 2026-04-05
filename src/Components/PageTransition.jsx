@@ -6,14 +6,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 const PageTransition = ({ 
   triggerRef, 
+  currentSectionRef, // We are now actively using this!
   nextSectionRef,
-  // Kept so App.jsx doesn't break
-  currentSectionRef, 
   originPosition, 
   color1 
 }) => {
   useLayoutEffect(() => {
-    if (!triggerRef?.current || !nextSectionRef?.current) return;
+    if (!triggerRef?.current || !nextSectionRef?.current || !currentSectionRef?.current) return;
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
@@ -25,16 +24,15 @@ const PageTransition = ({
         }
       });
 
-      // 1. SETUP: Start next page down and invisible.
-      // We set pointerEvents to "none" so it doesn't block your clicks while fading in.
+      // 1. SETUP: Start next page down, invisible, and crucially, UNCLICKABLE
       tl.set(nextSectionRef.current, { 
           display: "block", 
           visibility: "visible",
-          zIndex: 41, 
+          zIndex: 40, // Put it on top
           opacity: 0,
-          y: "30vh", 
+          y: "15vh", // Shorter, cleaner glide
           scale: 0.95,
-          pointerEvents: "none" 
+          pointerEvents: "none" // Don't steal clicks while fading
         });
 
       // 2. ANIMATE: Hardware-accelerated glide up
@@ -45,18 +43,22 @@ const PageTransition = ({
         ease: "none" 
       });
 
-      // 3. END: Turn clicks back on ONLY once the page is fully on screen
-      tl.set(nextSectionRef.current, { 
-          pointerEvents: "auto" 
+      // 3. THE FIX: The exact moment the transition reaches 100%
+      // - Make the NEW section fully interactive
+      // - Completely disable and hide the OLD section so it can't block your scroll/clicks
+      tl.set(nextSectionRef.current, { pointerEvents: "auto" });
+      tl.set(currentSectionRef.current, { 
+          pointerEvents: "none",
+          visibility: "hidden", 
+          opacity: 0 
       });
       
     });
     
     return () => ctx.revert();
-  }, [triggerRef, nextSectionRef]);
+  }, [triggerRef, nextSectionRef, currentSectionRef]);
 
-  // We completely deleted the HTML shield!
-  // Returning null tells React this component only runs background GSAP logic.
+  // No HTML rendered here, just clean GSAP logic
   return null; 
 };
 
