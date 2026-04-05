@@ -1,16 +1,46 @@
-# React + Vite
+# 🚀 Interactive GSAP Resume & Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Live Demo:** [View My Professional Portfolio](https://sahil-2526.github.io/Resume/)
 
-Currently, two official plugins are available:
+A high-performance, visually engaging resume website built with **React**, **GSAP**, and **Tailwind CSS**. This project serves as my professional portfolio, focusing on high-end motion design and complex frontend architecture.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **Custom Transition Engine:** A specialized GSAP `clip-path` reveal that stacks sections seamlessly, preventing "white-screen" flashes.
+* **Scroll-Driven Storytelling:** Uses `ScrollTrigger` pinning to lock sections in place during transitions, creating a cinematic narrative flow.
+* **Performance Optimized:** Utilizing `useGSAP` for memory management and hardware-accelerated transforms to maintain **60fps**.
+* **Handoff Logic:** Custom logic to toggle between `fixed` and `relative` positioning, ensuring internal page scrolls and buttons remain fully functional.
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Category | Technology |
+| :--- | :--- |
+| **Frontend** | React.js (Hooks & Context API) |
+| **Animation** | GSAP (GreenSock), ScrollTrigger |
+| **Styling** | Tailwind CSS |
+| **Languages** | JavaScript, C++, Python |
+
+---
+
+## 🕹️ Technical Deep Dive: The Transition Lifecycle
+
+The core of this site is the `PageTransition` component. It solves the common "Ghost Element" problem in GSAP (where invisible layers block clicks) by following a strict lifecycle:
+
+1.  **Mount:** Next section is pre-set to `fixed` with a `circle(0%)` mask.
+2.  **Scrub:** The user's scroll progress drives the `clip-path` expansion.
+3.  **Handoff:** Upon completion (`onLeave`), the section is released to `position: relative`.
+4.  **Cleanup:** Properties are cleared to restore the browser's natural "hit-detection" for buttons and links.
+
+---
+
+
+## 👨‍💻 About Me
+
+I am a **Computer Science student** at **IIIT Manipur**. I am passionate about solving complex problems—whether it's optimizing DSA challenges or creating fluid UI/UX experiences. 
+
+* **GitHub:** [Sahil-2526](https://github.com/Sahil-2526)
+* **Interests:** Web Development, Problem Solving, Basketball, and Traveling.
+
+---
