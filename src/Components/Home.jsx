@@ -2,7 +2,7 @@ import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import gsap from "gsap";
 
 import resumePDF from '../assets/Sahil_Resume.pdf'; 
-import Sahil from '../assets/Sahil.jpeg'; // Your profile picture for the home card
+import Sahil from '../assets/Sahil.jpeg'; 
 
 // Clean, Elegant Minimal Typography for the Side Name
 const SeasonLetter = ({ char }) => (
@@ -41,7 +41,8 @@ const Home = React.forwardRef((props, ref) => {
 
       // Card intro animation (always expanded)
       tl.to(contentBoxRef.current, {
-        width: isMobile ? "90vw" : 400, 
+        // 👇 INCREASED SIZE: Desktop to 500, Mobile to 92vw
+        width: isMobile ? "92vw" : 500, 
         height: "auto", 
         borderRadius: "24px", 
         backgroundColor: "rgba(255, 255, 255, 0.03)", 
@@ -59,20 +60,18 @@ const Home = React.forwardRef((props, ref) => {
 
   // --- CUSTOM SLOW SMOOTH SCROLL FUNCTION ---
   const handleScrollToAbout = (e) => {
-    e.preventDefault(); // Prevent default instant anchor jump
+    e.preventDefault(); 
     
     const target = document.getElementById('about');
-    if (!target) return; // If #about doesn't exist on this page, do nothing
+    if (!target) return; 
     
     const targetPosition = target.getBoundingClientRect().top + window.scrollY;
     const startPosition = window.scrollY;
     const distance = targetPosition - startPosition;
     let startTime = null;
     
-    // Duration in milliseconds (1500ms = 1.5 seconds). Increase for an even slower scroll!
     const duration = 1500; 
     
-    // Easing function for a cinematic slow start and slow end
     const easeInOutQuad = (t, b, c, d) => {
       t /= d / 2;
       if (t < 1) return (c / 2) * t * t + b;
@@ -112,58 +111,59 @@ const Home = React.forwardRef((props, ref) => {
       </div>
 
       {/* --- MAIN INTERACTIVE PROFILE CARD --- */}
-      <div className="absolute inset-0 flex items-center justify-start px-[8vw] md:px-[12vw] z-20 pointer-events-none">
+      <div className="absolute inset-0 flex items-center justify-start px-[6vw] md:px-[12vw] z-20 pointer-events-none">
         
         <div ref={containerRef} className="pointer-events-auto">
             <div ref={contentBoxRef} className="relative overflow-hidden border border-white/10 backdrop-blur-xl transition-all duration-300">
 
-              <div className="p-6 md:p-8">
+              <div className="p-8 md:p-10">
                 
-                <div className="content-wrapper opacity-0 invisible translate-y-4 flex items-start gap-4 mb-5 pb-5 border-b border-white/5">
-                  <div className="w-23 h-23 rounded-full border border-white/10 overflow-hidden flex-shrink-0 mt-1 bg-white/5 shadow-[0_0_15px_rgba(0,243,255,0.1)]">
-                    <img src={Sahil} alt="Sahil Profile" className="w-full h-full object-cover object-top transition-transform duration-500 ease-in-out hover:scale-140  " />
+                <div className="content-wrapper opacity-0 invisible translate-y-4 flex items-center gap-5 mb-6 pb-6 border-b border-white/5">
+                  {/* 👇 Increased image container size to w-28 h-28 */}
+                  <div className="w-24 h-24 md:w-28 md:h-28 rounded-full border border-white/10 overflow-hidden flex-shrink-0 bg-white/5 shadow-[0_0_15px_rgba(0,243,255,0.1)]">
+                    <img src={Sahil} alt="Sahil Profile" className="w-full h-full object-cover object-top transition-transform duration-500 ease-in-out hover:scale-110" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-cyan-400/80 font-mono text-[10px] tracking-[0.3em] uppercase mb-1">Academic & Growth Profile</h3>
-                    <h1 className="text-2xl md:text-[28px] font-serif text-white mb-3 leading-tight">Sahil</h1>
-                    <div className="w-12 h-[1px] bg-cyan-400/50" />
+                    <h3 className="text-cyan-400/80 font-mono text-[11px] tracking-[0.3em] uppercase mb-1">Academic & Growth Profile</h3>
+                    <h1 className="text-3xl md:text-4xl font-serif text-white mb-3 leading-tight">Sahil</h1>
+                    <div className="w-16 h-[1px] bg-cyan-400/50" />
                   </div>
                 </div>
 
                 <div className="content-wrapper opacity-0 invisible translate-y-4">
-                  <p className="text-cyan-400/80 font-mono text-[9px] tracking-[0.2em] animate-pulse mb-3">
+                  <p className="text-cyan-400/80 font-mono text-[10px] tracking-[0.2em] animate-pulse mb-4">
                     {'>'} CURRENT_PATH: CS_STUDENT // EVOLVING
                   </p>
-                  <p className="text-slate-300 text-xs md:text-sm leading-relaxed font-light mb-6 max-w-sm">
+                  {/* Made the text slightly larger to fill the new width */}
+                  <p className="text-slate-300 text-sm md:text-base leading-relaxed font-light mb-8">
                     A <span className="text-white font-normal">Computer Science Student</span> driven by curiosity. 
                     I <span className="text-blue-300 font-normal italic">study the craft</span>, seeking 
                     challenges in React, Python, and the art of smooth motion.
                   </p>
                   
                   {/* Action Buttons */}
-                  <div className="flex gap-3 w-full">
+                  <div className="flex gap-4 w-full">
                     <a 
                       href="#about"
                       onClick={handleScrollToAbout}
-                      className="flex-1 flex justify-center items-center py-2.5 rounded-full border border-white/10 bg-white/5 text-white text-[9px] tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-500"
+                      className="flex-1 flex justify-center items-center py-3 rounded-full border border-white/10 bg-white/5 text-white text-[10px] tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-500"
                     >
                       Know About Me
                     </a>
                     
-                    {/* View Resume Button */}
                     <button 
                       onClick={() => setShowResume(true)}
-                      className="flex-1 flex justify-center items-center py-2.5 rounded-full bg-[#00F3FF]/90 text-black text-[9px] tracking-widest uppercase font-bold hover:bg-white transition-all duration-500 shadow-[0_0_10px_rgba(0,243,255,0.3)]"
+                      className="flex-1 flex justify-center items-center py-3 rounded-full bg-[#00F3FF]/90 text-black text-[10px] tracking-widest uppercase font-bold hover:bg-white transition-all duration-500 shadow-[0_0_10px_rgba(0,243,255,0.3)]"
                     >
                       View Resume
                     </button>
                   </div>
 
-                  <div className="mt-6 pt-5 border-t border-white/5">
-                    <p className="text-[9px] text-slate-500 uppercase tracking-[0.2em] mb-3">Eagerly Learning:</p>
-                    <div className="flex flex-wrap gap-2">
+                  <div className="mt-8 pt-6 border-t border-white/5">
+                    <p className="text-[10px] text-slate-500 uppercase tracking-[0.2em] mb-4">Eagerly Learning:</p>
+                    <div className="flex flex-wrap gap-2.5">
                       {['Advanced DSA', 'System Design', 'UI Physics'].map((skill, i) => (
-                        <div key={i} className="px-2.5 py-0.5 bg-white/5 border border-white/10 rounded-full text-[9px] text-slate-300 font-mono hover:border-cyan-400/50 transition-colors">
+                        <div key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-slate-300 font-mono hover:border-cyan-400/50 transition-colors">
                           {skill}
                         </div>
                       ))}
