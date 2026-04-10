@@ -1,5 +1,4 @@
 import React, { useState, useRef, useCallback, memo, useEffect } from 'react';
-// REMOVED: BrowserRouter as Router
 import { Routes, Route, useLocation } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -90,18 +89,23 @@ export default function App() {
   };
 
   return (
-    // <Router> WAS REMOVED FROM HERE
     <>
       <ScrollToTop />
       
+      {/* 1. TOP UI LAYER (Always on top of everything) */}
       <div className="fixed top-0 left-0 right-0 z-[1000] pointer-events-auto">
         <Navbar toggleMenu={toggleMenu} />
         <Menu onClick={toggleMenu} isOpen={isMenuOpen} />
       </div>
 
-      <div className="relative">
+      {/* 2. OVERLAY MENU LAYER (Moved here, given z-[999] so it sits perfectly under the Navbar) */}
+      <div className="relative z-[999]">
         <OverlayMenu isOpen={isMenuOpen} />
+      </div>
 
+      {/* 3. SCROLLING PAGES & TRANSITIONS LAYER */}
+      <div className="relative">
+        
         {/* SECTION LAYERS */}
         <GokuPage sectionRef={sectionRefs.goku} />
         <SpringPage sectionRef={sectionRefs.spring} />
@@ -110,7 +114,7 @@ export default function App() {
         <AutumnPage sectionRef={sectionRefs.autumn} />
 
         {/* CLONE TRACKS FOR SCROLLING */}
-        <div className="relative z-0">
+        <div className="relative z-0 pointer-events-none">
           <div id="home" ref={transitionRefs.t1} className="h-[300vh]" />
           <div id="about" ref={transitionRefs.t2} className="h-[300vh]" />
           <div id="academics" ref={transitionRefs.t3} className="h-[300vh]" />
@@ -146,6 +150,5 @@ export default function App() {
         <Footer triggerRef={transitionRefs.t5} />
       </div>
     </>
-    // </Router> WAS REMOVED FROM HERE
   );
 }

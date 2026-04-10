@@ -1,9 +1,7 @@
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
+import React, { useRef } from "react";
 
 const Navbar = ({ toggleMenu }) => {
   const navRef = useRef(null);
-  const lastScrollY = useRef(0);
 
   const navItems = [
     { name: "HOME", link: "#home" },
@@ -12,33 +10,6 @@ const Navbar = ({ toggleMenu }) => {
     { name: "SKILLS", link: "#skills" },
     { name: "PROJECTS", link: "#projects" },
   ];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const navbar = navRef.current;
-
-      if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
-        // Scroll Down -> Hide Up
-        gsap.to(navbar, {
-          yPercent: -100,
-          duration: 1.5,
-          ease: "power2.out",
-        });
-      } else {
-        // Scroll Up -> Show
-        gsap.to(navbar, {
-          yPercent: 0,
-          duration: 1.5,
-          ease: "power2.out",
-        });
-      }
-      lastScrollY.current = currentScrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const handleNavClick = (e, targetId) => {
     e.preventDefault();
