@@ -4,34 +4,34 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// --- PROJECT DATA ---
+// --- PROJECT DATA FROM NEW CV ---
 const PROJECT_DATA = [
   { 
     id: 1, 
-    title: "Interactive CV Portfolio", 
-    desc: "A multi-seasonal, highly animated 3D web experience.",
-    tech: ["React.js", "GSAP", "Tailwind"],
+    title: "Developer Portfolio Website", 
+    desc: "A high-performance personal portfolio featuring complex GSAP animations, custom theme toggling, and 100/100 Lighthouse scores. Deployed via Vercel CI/CD.",
+    tech: ["React.js", "TailwindCSS", "GSAP"],
     img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=600" 
   },
   { 
     id: 2, 
     title: "Ahouba Techfest Portal", 
-    desc: "Official interactive web platform for the university tech festival.",
-    tech: ["Frontend", "UI/UX", "CSS3"],
+    desc: "Official platform for IIIT Manipur's tech fest. Features interactive GSAP animations, a responsive UI, and a 30% reduced bundle size for optimized performance.",
+    tech: ["React.js", "TailwindCSS", "GSAP"],
     img: "https://images.unsplash.com/photo-1514477917009-389c76a86b68?auto=format&fit=crop&q=80&w=600" 
   },
   { 
     id: 3, 
-    title: "Developer README", 
-    desc: "Dynamic GitHub profile showcasing automated stats and skills.",
-    tech: ["Markdown", "APIs", "Design"],
+    title: "Task Scheduler Dashboard", 
+    desc: "Desktop-based task management GUI. Features a custom prioritization engine (importance, deadline, effort), daily auto-scheduling, and local data persistence.",
+    tech: ["C++", "Qt6", "CMake"],
     img: "https://images.unsplash.com/photo-1476820865390-c52aeebb9891?auto=format&fit=crop&q=80&w=600" 
   },
   { 
     id: 4, 
-    title: "Algorithmic Vault", 
-    desc: "Optimized solutions repository for 100+ LeetCode problems.",
-    tech: ["C++", "Python", "DSA"],
+    title: "Wingull's Catch (2D Game)", 
+    desc: "A smooth 60 FPS 2D browser game. Includes dynamic difficulty scaling, a stamina system, interactive power-ups, and local high-score tracking.",
+    tech: ["HTML", "CSS", "JavaScript"],
     img: "https://images.unsplash.com/photo-1509565840034-3c385bed64f3?auto=format&fit=crop&q=80&w=600" 
   }
 ];
@@ -197,7 +197,6 @@ const Projects = () => {
       </div>
 
       {/* --- GALLERY SECTION --- */}
-      {/* ADJUSTED PADDING TOP: pt-10 md:pt-16 brings everything a little bit up */}
       <div className="relative z-40 w-full h-full flex flex-col items-center justify-center pt-10 md:pt-16 pointer-events-none">
         
         {/* Title */}
