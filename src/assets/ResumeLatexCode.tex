@@ -1,223 +1,212 @@
-\documentclass{article}
-\usepackage{amsmath}
-\usepackage{color,pxfonts,fix-cm}
-\usepackage{latexsym}
-\usepackage[mathletters]{ucs}
-\DeclareUnicodeCharacter{8211}{\textendash}
-\DeclareUnicodeCharacter{46}{\textperiodcentered}
-\DeclareUnicodeCharacter{124}{\textbar}
+\documentclass[11pt,a4paper]{article}
+
+% ----- PACKAGES -----
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[utf8x]{inputenc}
-\usepackage{pict2e}
-\usepackage{wasysym}
-\usepackage[english]{babel}
-\usepackage{tikz}
-\pagestyle{empty}
-\usepackage[margin=0in,paperwidth=612pt,paperheight=792pt]{geometry}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{amsmath}
 
+% ----- HYPERLINK SETUP -----
+\definecolor{linkcolor}{RGB}{0, 80, 160}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=linkcolor,
+    filecolor=linkcolor,
+    urlcolor=linkcolor,
+}
+
+% ----- FORMATTING SETUP -----
+% Custom section formatting
+\titleformat{\section}{\large\bfseries\uppercase}{}{0pt}{}[\titlerule]
+\titlespacing*{\section}{0pt}{8pt}{6pt}
+
+% Custom commands for tabular headers
+\newcommand{\resumeSubheading}[4]{
+    \begin{tabular*}{1\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{#3} & \textit{#4} \\
+    \end{tabular*}\vspace{-4pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \begin{tabular*}{1\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textit{#2} \\
+    \end{tabular*}\vspace{-4pt}
+}
+
+% ----- DOCUMENT START -----
 \begin{document}
-\definecolor{color_29791}{rgb}{0,0,0}
 
-%---------------- HEADER ----------------%
-\begin{picture}(-5,0)(2.5,0)
-\put(260.984,-43.213){\fontsize{24.7871}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}Sahil}
-\put(120.189,-56.165){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}+91-9898999465}
-\put(194.351,-56.165){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{it}\selectfont\color{color_29791}|}
-\put(200.446,-56.165){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}sahil.26.02.2007@gmail.com}
-\put(323.925,-56.165){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{it}\selectfont\color{color_29791}|}
-\put(330.010,-56.165){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}LinkedIn}
-\put(371.940,-56.165){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{it}\selectfont\color{color_29791}|}
-\put(378.025,-56.165){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}GitHub}
-\put(414.350,-56.165){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{it}\selectfont\color{color_29791}|}
-\put(420.435,-56.165){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}LeetCode}
-\end{picture}
-\begin{tikzpicture}[overlay]
-\draw[color_29791,line width=0.398pt] (200.444pt, -59.497pt) -- (320.605pt, -59.497pt);
-\draw[color_29791,line width=0.398pt] (330.014pt, -57.559pt) -- (368.619pt, -57.559pt);
-\draw[color_29791,line width=0.398pt] (378.028pt, -57.559pt) -- (411.029pt, -57.559pt);
-\draw[color_29791,line width=0.398pt] (420.439pt, -57.559pt) -- (461.812pt, -57.559pt);
-\end{tikzpicture}
+% ----- HEADER -----
+\begin{center}
+    {\Huge \textbf{Sahil}} \\ \vspace{4pt}
+    \small 
+    +91-9898999465 $|$ \href{mailto:sahil.26.02.2007@gmail.com}{\color{black}sahil.26.02.2007@gmail.com} $|$ 
+    \href{https://www.linkedin.com/in/sahil-b870593a4}{\color{black}LinkedIn} $|$ 
+    \href{https://github.com/Sahil-2526}{\color{black}GitHub} $|$ 
+    \href{https://leetcode.com/u/Sahil-2526/}{\color{black}LeetCode}
+\end{center}
 
-%---------------- PROFESSIONAL SUMMARY ----------------%
-\begin{picture}(-5,0)(2.5,0)
-\put(21,-78.109){\fontsize{11.9552}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Professional Summary}
-\end{picture}
-\begin{tikzpicture}[overlay]
-\draw[color_29791,line width=0.398pt] (21pt, -82.492pt) -- (561pt, -82.492pt);
-\end{tikzpicture}
-\begin{picture}(-5,0)(2.5,0)
-\put(21,-96.089){\fontsize{10.9091}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Motivated Computer Science undergraduate at Indian Institute of Information Technology Manipur with strong}
-\put(21,-109.638){\fontsize{10.9091}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}foundations in Data Structures, Algorithms, and modern web development. Experienced in building responsive}
-\put(21,-123.187){\fontsize{10.9091}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}web applications using React.js, TailwindCSS, and JavaScript. Passionate about problem solving and scalable}
-\put(21,-136.737){\fontsize{10.9091}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}software development with 250+ algorithmic problems solved on LeetCode.}
-\end{picture}
+% ----- PROFESSIONAL SUMMARY -----
+\section{Professional Summary}
+\vspace{2pt}
+\small{Motivated Computer Engineering undergraduate at the Indian Institute of Information Technology Senapati, Manipur, with a strong foundation in Data Structures, Algorithms, Machine Learning, and modern web development. Experienced in building predictive AI models using Python and responsive web applications using React.js and Tailwind CSS. Passionate about scalable software engineering and problem-solving, with over 500 algorithmic problems solved on LeetCode. Actively seeking technical internship opportunities in Software Engineering, Machine Learning, and Data Science.}
 
-%---------------- EDUCATION ----------------%
-\begin{picture}(-5,0)(2.5,0)
-\put(21,-158.681){\fontsize{11.9552}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Education}
-\end{picture}
-\begin{tikzpicture}[overlay]
-\draw[color_29791,line width=0.398pt] (21pt, -163.064pt) -- (561pt, -163.064pt);
-\end{tikzpicture}
-\begin{picture}(-5,0)(2.5,0)
-\put(31.8,-176.577){\fontsize{10.9091}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}Indian Institute of Information Technology Manipur}
-\put(490.753,-176.577){\fontsize{10.9091}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Imphal, India}
-\put(31.8,-190.126){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{it}\selectfont\color{color_29791}Bachelor of Technology (CSE)}
-\put(458.225,-190.126){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{it}\selectfont\color{color_29791}Aug 2024 \textendash{} May 2028}
-\put(31.8,-203.668){\fontsize{10.9091}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}Senior Secondary (Class XII)}
-\put(533.787,-203.668){\fontsize{10.9091}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}2024}
-\put(31.8,-217.218){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{it}\selectfont\color{color_29791}Percentage: 86.6\%}
-\put(31.8,-230.760){\fontsize{10.9091}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}Secondary (Class X)}
-\put(533.778,-230.760){\fontsize{10.9091}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}2022}
-\put(31.8,-244.309){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{it}\selectfont\color{color_29791}Percentage: 87.6\%}
-\end{picture}
+% ----- EDUCATION -----
+\section{Education}
+\begin{itemize}[leftmargin=0in, label={}, itemsep=2pt]
+  \item \resumeSubheading
+    {Indian Institute of Information Technology Senapati, Manipur}{Imphal, India}
+    {Bachelor of Technology, Computer Engineering; CPI: 8.64}{Jun 2024 -- Jun 2028}
+  \item \resumeSubheading
+    {Army Public School, Danapur Cantt (APS)}{}
+    {Senior Secondary (Class XII); Percentage: 86.6\%}{2023 -- 2024}
+  \item \resumeSubheading
+    {Army Public School, Danapur Cantt (APS)}{}
+    {Secondary (Class X); Percentage: 87.6\%}{2021 -- 2022}
+\end{itemize}
 
-%---------------- EXPERIENCE ----------------%
-\begin{picture}(-5,0)(2.5,0)
-\put(21,-260.156){\fontsize{11.9552}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Experience}
-\end{picture}
-\begin{tikzpicture}[overlay]
-\draw[color_29791,line width=0.398pt] (21pt, -264.54pt) -- (561pt, -264.54pt);
-\end{tikzpicture}
-\begin{picture}(-5,0)(2.5,0)
-\put(31.8,-277.5){\fontsize{10.9091}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}Undergraduate Research Fellow}
-\put(440.0,-277.5){\fontsize{10.9091}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Jun 2026 \textendash{} Present}
-\put(31.8,-291.0){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{it}\selectfont\color{color_29791}TEXMiN (IIIT Manipur Mining CPS CoE)}
-\put(44.617,-304.5){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-304.5){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Developing SENTINEL-MINE: AI-predictive geofencing \& hardware safety interlock.}
-\put(44.617,-318.0){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-318.0){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Researching sub-surface anomaly detection under Dr. Nongmeikapam Kishorjit Singh.}
-\end{picture}
+% ----- EXPERIENCE -----
+\section{Experience}
+\begin{itemize}[leftmargin=0in, label={}, itemsep=2pt]
 
-%---------------- RELEVANT COURSEWORK ----------------%
-\begin{picture}(-5,0)(2.5,0)
-\put(21,-335.0){\fontsize{11.9552}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Relevant Coursework}
-\end{picture}
-\begin{tikzpicture}[overlay]
-\draw[color_29791,line width=0.398pt] (21pt, -339.384pt) -- (561pt, -339.384pt);
-\end{tikzpicture}
-\begin{picture}(-5,0)(2.5,0)
-\put(31.8,-352.884){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}\textbullet{} Data Structures and Algorithms}
-\put(31.8,-366.384){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}\textbullet{} Object-Oriented Programming}
-\put(31.8,-379.884){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}\textbullet{} Web Development}
-\put(31.8,-393.384){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}\textbullet{} Software Engineering}
-\put(31.8,-406.884){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}\textbullet{} Database Management Systems (SQL)}
-\end{picture}
+  \item \resumeSubheading
+    {Undergraduate Research Fellow}{Jun 2026 -- Present}
+    {TEXMiN-IIIT Manipur Mining CPS CoE}{Manipur, India $|$ Remote}
+    \begin{itemize}[leftmargin=0.15in, label={\textbullet}, topsep=2pt, itemsep=0pt]
+      \item \small{Developing SENTINEL-MINE, an AI-predictive geofencing and hardware safety interlock system designed to enhance operational safety in hazardous mining environments.}
+      \item \small{Researching sub-surface anomaly detection using advanced predictive analytics under the supervision of Dr. Nongmeikapam Kishorjit Singh.}
+      \item \small{Processed complex cyber-physical sensor data arrays to train anomaly detection models, improving predictive accuracy\%.}
+    \end{itemize}
 
-%---------------- TECHNICAL SKILLS ----------------%
-\begin{picture}(-5,0)(2.5,0)
-\put(21,-426.834){\fontsize{11.9552}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Technical Skills}
-\end{picture}
-\begin{tikzpicture}[overlay]
-\draw[color_29791,line width=0.398pt] (21pt, -431.218pt) -- (561pt, -431.218pt);
-\end{tikzpicture}
-\begin{picture}(-5,0)(2.5,0)
-\put(31.8,-444.718){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}Languages:}
-\put(91.392,-444.718){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}C, C++, Python, JavaScript}
-\put(31.8,-458.218){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}Frontend:}
-\put(91.392,-458.218){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}HTML, CSS, React.js, TailwindCSS}
-\put(31.8,-471.718){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}Tools:}
-\put(91.392,-471.718){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Git, GitHub, VS Code, GSAP}
-\put(31.8,-485.218){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}Core Concepts:}
-\put(106.392,-485.218){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Data Structures, Algorithms, OOP}
-\end{picture}
+  \item \resumeSubheading
+    {Artificial Intelligence Intern}{Jul 2026 -- Aug 2026}
+    {Mirai School of Technology}{Remote}
+    \begin{itemize}[leftmargin=0.15in, label={\textbullet}, topsep=2pt, itemsep=0pt]
+      \item \small{Conducted Exploratory Data Analysis (EDA) and built predictive machine learning pipelines using Python and Scikit-learn.}
+      \item \small{Applied rigorous data preprocessing techniques, including missing value imputation and categorical encoding using Pandas and NumPy, to prepare datasets for modeling.}
+      \item \small{Evaluated and optimized regression algorithms to achieve good accuracy of on evaluation datasets.}
+    \end{itemize}
 
-%---------------- PROJECTS ----------------%
-\begin{picture}(-5,0)(2.5,0)
-\put(21,-505.169){\fontsize{11.9552}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Projects}
-\end{picture}
-\begin{tikzpicture}[overlay]
-\draw[color_29791,line width=0.398pt] (21pt, -509.553pt) -- (561pt, -509.553pt);
-\end{tikzpicture}
-\begin{picture}(-5,0)(2.5,0)
-\put(31.8,-523.053){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}Ahouba Website (IIIT Manipur Tech Fest)}
-\put(470.598,-523.053){\fontsize{10.9091}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Live: ahouba.com}
-\put(44.617,-536.553){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-536.553){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Contributed to development of official fest website.}
-\put(44.617,-550.053){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-550.053){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Built responsive UI using React.js and TailwindCSS.}
-\put(44.617,-563.553){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-563.553){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Integrated animations using GSAP to enhance UX.}
-\put(44.617,-577.053){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-577.053){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Reduced bundle size by 30\% through optimization.}
-\put(31.8,-608.553){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}Task Scheduler Dashboard}
-\put(470.598,-608.553){\fontsize{10.9091}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}C++, Qt6, CMake}
-\put(44.617,-622.053){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-622.053){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Developed a desktop-based task management application with modern GUI.}
-\put(44.617,-635.553){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-635.553){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Designed prioritization engine using importance, deadline, and effort.}
-\put(44.617,-649.053){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-649.053){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Built daily planning system with tracking and auto-scheduling.}
-\put(44.617,-662.553){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-662.553){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Implemented auto-save and local data persistence.}
-\put(31.8,-680.553){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}Wingull's Catch (2D Game)}
-\put(438.598,-680.553){\fontsize{10.9091}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}HTML, CSS, JavaScript}
-\put(44.617,-694.053){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-694.053){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Developed 2D browser game with smooth 60 FPS rendering.}
-\put(44.617,-707.553){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-707.553){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Implemented dynamic difficulty, stamina system, and power-ups.}
-\put(44.617,-721.053){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-721.053){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Added high-score tracking using local storage.}
-\put(44.617,-734.553){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-734.553){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Designed responsive UI with real-time feedback.}
-\end{picture}
+\end{itemize}
 
-%---------------- PAGE 2 ----------------%
-\newpage
-\begin{picture}(-5,0)(2.5,0)
-\put(31.8,-37.0){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}Developer Portfolio Website}
-\put(44.617,-50.5){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-50.5){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Built personal portfolio to showcase projects and skills.}
-\put(44.617,-64.0){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-64.0){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Designed responsive UI using TailwindCSS.}
-\put(44.617,-77.5){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-77.5){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Added animations using GSAP.}
-\put(44.617,-91.0){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-91.0){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Optimized performance and accessibility.}
-\put(44.617,-104.5){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-104.5){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Implemented custom light/dark theme toggling with smooth transitions.}
-\put(44.617,-118.0){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-118.0){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Achieved 100/100 Lighthouse scores for SEO, Accessibility, and Performance.}
-\put(44.617,-131.5){\fontsize{9.9626}{1}\usefont{T1}{cmr}{b}{n}\selectfont\color{color_29791}\textendash}
-\put(55.795,-131.5){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Deployed on Vercel with CI/CD pipelines for automated testing and deployment.}
-\end{picture}
+% ----- TECHNICAL SKILLS -----
+\section{Technical Skills}
+\vspace{2pt}
+\begin{itemize}[leftmargin=0.15in, label={}, itemsep=1pt]
+    \item \small{\textbf{Languages}{: C, C++, Python, JavaScript, HTML, CSS}}
+    \item \small{\textbf{Machine Learning \& Data}{: Machine Learning, Predictive Analytics, Pandas, NumPy, Scikit-learn, EDA, Data Preprocessing}}
+    \item \small{\textbf{CS Fundamentals}{: Data Structures \& Algorithms, Object-Oriented Programming (OOP), DBMS, Dynamic Programming}}
+    \item \small{\textbf{Web Technologies \& Tools}{: React.js, Tailwind CSS, Git, GitHub, VS Code, GSAP}}
+\end{itemize}
 
-%---------------- COMPETITIVE PROGRAMMING ----------------%
-\begin{picture}(-5,0)(2.5,0)
-\put(21,-160.0){\fontsize{11.9552}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Competitive Programming}
-\end{picture}
-\begin{tikzpicture}[overlay]
-\draw[color_29791,line width=0.398pt] (21pt, -164.3pt) -- (561pt, -164.3pt);
-\end{tikzpicture}
-\begin{picture}(-5,0)(2.5,0)
-\put(31.8,-177.8){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}\textbullet{} Solved 250+ problems on LeetCode (arrays, strings, recursion, DP).}
-\put(31.8,-191.3){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}\textbullet{} Practiced regularly on HackerRank and Codeforces.}
-\put(31.8,-204.8){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}\textbullet{} Participated in coding contests with strong rankings.}
-\end{picture}
+% ----- PROJECTS -----
+\section{Projects}
+\begin{itemize}[leftmargin=0in, label={}, itemsep=4pt]
 
-%---------------- CERTIFICATIONS ----------------%
-\begin{picture}(-5,0)(2.5,0)
-\put(21,-224.8){\fontsize{11.9552}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Certifications}
-\end{picture}
-\begin{tikzpicture}[overlay]
-\draw[color_29791,line width=0.398pt] (21pt, -229.1pt) -- (561pt, -229.1pt);
-\end{tikzpicture}
-\begin{picture}(-5,0)(2.5,0)
-\put(31.8,-242.6){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}\textbullet{} Problem Solving with C++ and Python (LeetCode)}
-\put(31.8,-256.1){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}\textbullet{} Web Development with React and JavaScript (Self-learning)}
-\end{picture}
+  \item \resumeProjectHeading
+    {IPL Match Data Analysis \& Prediction $|$ \normalfont\textit{Python, Pandas, Scikit-learn, ML}}{}
+    \begin{itemize}[leftmargin=0.15in, label={\textbullet}, topsep=2pt, itemsep=0pt]
+      \item \small{Conducted Exploratory Data Analysis (EDA) on historical IPL datasets to identify key match-winning factors and player performance trends.}
+      \item \small{Engineered features from raw statistical data to train predictive machine learning models for match outcomes.}
+      \item \small{Optimized classification models to predict match results with good accuracy across validation splits.}
+    \end{itemize}
 
-%---------------- ACHIEVEMENTS ----------------%
-\begin{picture}(-5,0)(2.5,0)
-\put(21,-276.1){\fontsize{11.9552}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}Achievements}
-\end{picture}
-\begin{tikzpicture}[overlay]
-\draw[color_29791,line width=0.398pt] (21pt, -280.4pt) -- (561pt, -280.4pt);
-\end{tikzpicture}
-\begin{picture}(-5,0)(2.5,0)
-\put(31.8,-293.9){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}\textbullet{} Strong academic performance in Computer Science.}
-\put(31.8,-307.4){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}\textbullet{} Built multiple real-world projects.}
-\put(31.8,-320.9){\fontsize{9.9626}{1}\usefont{T1}{cmr}{m}{n}\selectfont\color{color_29791}\textbullet{} Optimized performance and implemented advanced UI animations.}
-\end{picture}
+  \item \resumeProjectHeading
+    {House Price Prediction Model $|$ \normalfont\textit{Python, Scikit-learn, NumPy, Pandas}}{}
+    \begin{itemize}[leftmargin=0.15in, label={\textbullet}, topsep=2pt, itemsep=0pt]
+      \item \small{Built a predictive regression model to estimate house prices based on multiple property features and geospatial location data.}
+      \item \small{Implemented data preprocessing pipelines, including outlier detection, missing value imputation, and feature scaling.}
+      \item \small{Fine-tuned algorithmic hyperparameters to minimize Mean Squared Error (MSE) and improve generalizability on unseen data.}
+    \end{itemize}
+
+  \item \resumeProjectHeading
+    {Car Price Predictive Analytics $|$ \normalfont\textit{Python, Scikit-learn, Data Visualization}}{}
+    \begin{itemize}[leftmargin=0.15in, label={\textbullet}, topsep=2pt, itemsep=0pt]
+      \item \small{Developed a machine learning pipeline utilizing regression algorithms to predict used car prices based on vehicle history and specifications.}
+      \item \small{Visualized data correlations and evaluated feature importance to streamline the feature selection and engineering process.}
+      \item \small{Deployed the trained model as an interactive script, providing real-time price estimations based on user inputs.}
+    \end{itemize}
+
+  \item \resumeProjectHeading
+    {Ahouba Website (IIIT Manipur Tech Fest) $|$ \normalfont\textit{React.js, Tailwind CSS, GSAP}}{Live: ahouba.com}
+    \begin{itemize}[leftmargin=0.15in, label={\textbullet}, topsep=2pt, itemsep=0pt]
+      \item \small{Contributed to the frontend development of the official college technical festival website.}
+      \item \small{Built a highly responsive user interface and integrated custom dynamic animations using GSAP to enhance overall user experience.}
+      \item \small{Optimized web performance and rendering speeds, reducing the application bundle size by 30\% through effective optimization techniques.}
+    \end{itemize}
+
+  \item \resumeProjectHeading
+    {Task Scheduler Dashboard $|$ \normalfont\textit{C++, Qt6, CMake}}{}
+    \begin{itemize}[leftmargin=0.15in, label={\textbullet}, topsep=2pt, itemsep=0pt]
+      \item \small{Developed a comprehensive desktop-based task management application featuring a modern graphical user interface using the Qt framework.}
+      \item \small{Designed a custom prioritization engine that automatically sorts daily tasks based on user-defined importance, deadlines, and estimated effort.}
+      \item \small{Implemented local data persistence with an auto-save backend structure to ensure reliable daily planning and state tracking.}
+    \end{itemize}
+
+  \item \resumeProjectHeading
+    {Developer Portfolio Website $|$ \normalfont\textit{React, Tailwind CSS, GSAP}}{}
+    \begin{itemize}[leftmargin=0.15in, label={\textbullet}, topsep=2pt, itemsep=0pt]
+      \item \small{Designed and deployed a responsive personal portfolio to effectively showcase software projects and technical competencies.}
+      \item \small{Implemented custom light and dark theme toggling with smooth visual transitions and interactive scroll animations.}
+      \item \small{Achieved perfect 100/100 Lighthouse scores for SEO, Accessibility, and Performance, deploying via Vercel CI/CD pipelines.}
+    \end{itemize}
+
+  \item \resumeProjectHeading
+    {Wingull's Catch (2D Web Game) $|$ \normalfont\textit{HTML, CSS, JavaScript}}{}
+    \begin{itemize}[leftmargin=0.15in, label={\textbullet}, topsep=2pt, itemsep=0pt]
+      \item \small{Engineered a 2D browser-based game featuring a custom physics engine ensuring smooth 60 FPS rendering.}
+      \item \small{Programmed dynamic difficulty scaling, a robust stamina management system, and diverse in-game power-ups.}
+      \item \small{Designed a responsive UI with real-time gameplay feedback and integrated local storage for persistent high-score tracking.}
+    \end{itemize}
+\end{itemize}
+
+% ----- RELEVANT COURSEWORK -----
+\section{Relevant Coursework}
+\vspace{2pt}
+\begin{itemize}[leftmargin=0.15in, label={\textbullet}, noitemsep, topsep=0pt]
+    \item \small{Data Structures and Algorithms}
+    \item \small{Object-Oriented Programming (OOP)}
+    \item \small{Database Management Systems (SQL)}
+    \item \small{Software Engineering}
+    \item \small{Machine Learning \& Artificial Intelligence}
+    \item \small{Web Development}
+\end{itemize}
+\vspace{-4pt}
+
+% ----- COMPETITIVE PROGRAMMING -----
+\section{Competitive Programming}
+\vspace{2pt}
+\begin{itemize}[leftmargin=0.15in, label={\textbullet}, noitemsep, topsep=0pt]
+    \item \small{Solved \textbf{500+ algorithmic problems} on LeetCode, specializing in arrays, strings, recursion, and dynamic programming.}
+    \item \small{Practiced algorithmic problem-solving consistently on competitive platforms including HackerRank and Codeforces.}
+    \item \small{Participated in multiple online coding contests, demonstrating strong logical thinking and rapid execution.}
+\end{itemize}
+\vspace{-4pt}
+
+% ----- CERTIFICATIONS -----
+\section{Certifications \& Official Documents}
+\vspace{2pt}
+\begin{itemize}[leftmargin=0.15in, label={\textbullet}, noitemsep, topsep=0pt]
+    \item \small{\textbf{UG Fellowship Offer Letter} -- TEXMiN-IIIT Manipur Mining CPS CoE}
+    \item \small{\textbf{AI Summer Internship 2026 Offer Letter} -- Mirai School of Technology}
+    \item \small{\textbf{AI Summer Internship 2026 Completion Certificate} -- Mirai School of Technology}
+    \item \small{\textbf{Problem Solving with C++ and Python} -- LeetCode}
+    \item \small{\textbf{Web Development with React and JavaScript} -- Self-guided learning track}
+\end{itemize}
+\vspace{-4pt}
+
+% ----- ACHIEVEMENTS -----
+\section{Achievements}
+\vspace{2pt}
+\begin{itemize}[leftmargin=0.15in, label={\textbullet}, noitemsep, topsep=0pt]
+    \item \small{Maintained a strong academic record with a CPI of \textbf{8.64} in the competitive Computer Engineering program.}
+    \item \small{Successfully architected, built, and deployed multiple real-world full-stack and predictive machine learning projects.}
+    \item \small{Demonstrated ability to optimize frontend performance, achieving maximum Lighthouse accessibility and performance metrics.}
+\end{itemize}
 
 \end{document}
